@@ -6,6 +6,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
 import 'package:smart_edu/presentation/widget/course_card.dart';
+import 'package:smart_edu/presentation/widget/exam_list.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 
 class MainDashboard extends StatefulWidget {
@@ -191,7 +192,36 @@ class _MainDashboardState extends State<MainDashboard> {
             backgroundColor: context.theme.colorScheme.surface,
             labelType: NavigationRailLabelType.all,
             selectedIndex: 0,
-            onDestinationSelected: (index) {},
+            onDestinationSelected: (index) {
+              setState(() {
+                switch (index) {
+                  case 0:
+                    subWidget = CourseCard();
+                    break;
+                  case 1:
+                    subWidget = MainPanel();
+                    break;
+                  case 2:
+                    subWidget = MainPanel();
+                    break;
+                  case 3:
+                    subWidget = MainPanel();
+                    break;
+                  case 4:
+                    subWidget = MainPanel();
+                    break;
+                  case 5:
+                    subWidget = ExamList();
+                    break;
+                  case 6:
+                    subWidget = MainPanel();
+                    break;
+                  case 7:
+                    subWidget = MainPanel();
+                    break;
+                }
+              });
+            },
             destinations: [
               getNavRailEntry(Icons.home, '主页'),
               getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
