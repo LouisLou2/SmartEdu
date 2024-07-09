@@ -118,7 +118,8 @@ class _CourseCardState extends State<CourseCard> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => MainDashboard(
-                                subWidget: MainPanel(),
+                                subWidget:
+                                    CourseDetailPage(courseTitle: "马克思主义原理"),
                               ),
                             ));
                       },
