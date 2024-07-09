@@ -5,7 +5,7 @@ import 'package:smart_edu/style/style_scheme.dart';
 class ThemeVault{
   static ThemeData light = FlexThemeData.light(
     colors: const FlexSchemeColor(
-      primary: Color(0xff00296b),
+      primary: Color(0xff3369e7),
       primaryContainer: Color(0xffa0c2ed),
       secondary: Color(0xffd26900),
       secondaryContainer: Color(0xffffd270),

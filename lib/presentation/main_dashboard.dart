@@ -1,10 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
+import 'package:smart_edu/presentation/anim_sidebar.dart';
+import 'package:smart_edu/presentation/page/course_sched.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/widget/icon_chequer.dart';
+import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/style_scheme.dart';
+import 'package:smart_edu/try/side_bar.dart';
+
+import '../state/page_prov.dart';
 
 class MainDashboard extends StatefulWidget{
   const MainDashboard({super.key});
@@ -51,7 +59,7 @@ class _MainDashboardState extends State<MainDashboard>{
       backgroundColor: context.theme.colorScheme.onInverseSurface,
       appBar: AppBar(
         backgroundColor: context.theme.colorScheme.surface,
-        toolbarHeight: 85.h,
+        toolbarHeight: 60.h,
         leadingWidth: 400.w,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
@@ -63,13 +71,13 @@ class _MainDashboardState extends State<MainDashboard>{
             children: [
               Icon(
                 Icons.menu,
-                size: 32.sp,
+                size: 25.sp,
               ),
               SizedBox(width: 20.w,),
               Image.asset(
                 'assets/image/flutter_icon.png',
                 fit: BoxFit.cover,
-                width: 30.w,
+                width: 25.sp,
               ),
               Text(
                 'CSU Academy',
@@ -78,6 +86,7 @@ class _MainDashboardState extends State<MainDashboard>{
                   fontWeight: FontWeight.w500,
                   fontFamily: StyleScheme.engFontFamily,
                   color: context.theme.colorScheme.primary,
+                  fontSize: 20.sp,
                 ),
               ),
             ],
@@ -90,8 +99,9 @@ class _MainDashboardState extends State<MainDashboard>{
             return SearchBar(
               hintText: '搜索功能',
               constraints: BoxConstraints(
-                maxHeight: 600.h,
-                minHeight: 50.h,
+                maxHeight: 40.h,
+                maxWidth: 600.w,
+                minHeight: 30.h,
               ),
               elevation: const WidgetStatePropertyAll<double>(0.5),
               backgroundColor: WidgetStatePropertyAll<Color>(context.theme.colorScheme.onInverseSurface),
@@ -142,13 +152,12 @@ class _MainDashboardState extends State<MainDashboard>{
             },
           ),
           SizedBox(width: 20.w,),
-          const Icon(
-            Icons.notifications_active_outlined,
-          ),
+          const IconChequer(icon: Icons.notifications_none_outlined,color: Colors.amber,),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
-            child: const CircleAvatar(
-              child: Text(
+            child: CircleAvatar(
+              radius: 20.sp,
+              child: const Text(
                 '娄',
               ),
             ),
@@ -163,7 +172,10 @@ class _MainDashboardState extends State<MainDashboard>{
             backgroundColor: context.theme.colorScheme.surface,
             labelType: NavigationRailLabelType.all,
             selectedIndex: 0,
-            onDestinationSelected: (index) {},
+            onDestinationSelected: (index) {
+              print('@@@@@@@@@@@@index: $index');
+              ProvManager.pageProv.setPage(index);
+            },
             destinations: [
               getNavRailEntry(Icons.home, '主页'),
               getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
@@ -179,7 +191,32 @@ class _MainDashboardState extends State<MainDashboard>{
             thickness: 1,
             width: 1,
           ),
-          MainPanel(),
+          Selector<PageProv, int>(
+            selector: (context, prov) => prov.page,
+            shouldRebuild: (prev, next) => prev != next,
+            builder: (context, pageIndex, child) {
+              switch (pageIndex) {
+                case 0:
+                  return const MainPanel();
+                case 1:
+                  return const Center();
+                case 2:
+                  return const CourseSched();
+                case 3:
+                  return const Expanded(child:NavigationSide());
+                case 4:
+                  return const MainPanel();
+                case 5:
+                  return const MainPanel();
+                case 6:
+                  return const MainPanel();
+                case 7:
+                  return const MainPanel();
+                default:
+                  return const MainPanel();
+              }
+            },
+          ),
         ],
       ),
     );

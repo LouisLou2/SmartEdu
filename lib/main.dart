@@ -1,15 +1,20 @@
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/const/device.dart';
 import 'package:smart_edu/init_affairs.dart';
 import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/main_dashboard.dart';
+import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/theme_vault.dart';
+import 'package:smart_edu/try/line_chart.dart';
 
 void main(){
   uiInit();
+  ProvManager.init();
   runApp(const MainApp());
 }
 
@@ -38,7 +43,12 @@ class MainApp extends StatelessWidget{
             colorScheme: ThemeVault.dark.colorScheme,
           );
         },
-        home: const MainDashboard(),
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(value: ProvManager.pageProv),
+          ],
+          child: const MainDashboard(),
+        ),
       ),
     );
   }
