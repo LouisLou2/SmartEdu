@@ -1,21 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/widget/course_card.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 
-class MainDashboard extends StatefulWidget{
-  const MainDashboard({super.key});
-
+class MainDashboard extends StatefulWidget {
+  const MainDashboard({super.key, required this.subWidget});
+  final Widget subWidget;
   @override
   State<MainDashboard> createState() => _MainDashboardState();
 }
 
-class _MainDashboardState extends State<MainDashboard>{
+class _MainDashboardState extends State<MainDashboard> {
+  Widget? subWidget;
+  @override
+  void initState() {
+    super.initState();
+    subWidget = widget.subWidget;
+  }
 
-  Widget getThemeWidget(ThemeMode mode){
+  Widget getThemeWidget(ThemeMode mode) {
     IconData data;
     String text = StyleScheme.getThemeText(mode);
     switch (mode) {
@@ -46,7 +54,7 @@ class _MainDashboardState extends State<MainDashboard>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.theme.colorScheme.onInverseSurface,
       appBar: AppBar(
@@ -65,7 +73,9 @@ class _MainDashboardState extends State<MainDashboard>{
                 Icons.menu,
                 size: 32.sp,
               ),
-              SizedBox(width: 20.w,),
+              SizedBox(
+                width: 20.w,
+              ),
               Image.asset(
                 'assets/image/flutter_icon.png',
                 fit: BoxFit.cover,
@@ -86,7 +96,7 @@ class _MainDashboardState extends State<MainDashboard>{
         elevation: 0,
         centerTitle: false,
         title: SearchAnchor(
-          builder: (context, controller){
+          builder: (context, controller) {
             return SearchBar(
               hintText: '搜索功能',
               constraints: BoxConstraints(
@@ -94,25 +104,29 @@ class _MainDashboardState extends State<MainDashboard>{
                 minHeight: 50.h,
               ),
               elevation: const WidgetStatePropertyAll<double>(0.5),
-              backgroundColor: WidgetStatePropertyAll<Color>(context.theme.colorScheme.onInverseSurface),
-              surfaceTintColor: const WidgetStatePropertyAll<Color>(Colors.transparent),
+              backgroundColor: WidgetStatePropertyAll<Color>(
+                  context.theme.colorScheme.onInverseSurface),
+              surfaceTintColor:
+                  const WidgetStatePropertyAll<Color>(Colors.transparent),
               controller: controller,
-              padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.symmetric(horizontal: 16.w)),
-              onTap: ()=>controller.openView(),
-              onChanged: (_)=>controller.openView(),
+              padding: WidgetStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.w)),
+              onTap: () => controller.openView(),
+              onChanged: (_) => controller.openView(),
               leading: const Icon(Icons.search),
               trailing: [
                 Tooltip(
                   message: 'Clear Text',
                   child: IconButton(
-                    onPressed: (){},
+                    onPressed: () {},
                     icon: const Icon(Icons.clear),
                   ),
                 ),
               ],
             );
           },
-          suggestionsBuilder: (BuildContext context, SearchController controller) {
+          suggestionsBuilder:
+              (BuildContext context, SearchController controller) {
             return List.generate(5, (index) {
               final String item = 'item $index';
               return ListTile(
@@ -130,18 +144,30 @@ class _MainDashboardState extends State<MainDashboard>{
             options: [
               Text(
                 'Theme',
-                style: context.theme.textTheme.titleMedium?.copyWith(fontFamily: StyleScheme.engFontFamily),
+                style: context.theme.textTheme.titleMedium
+                    ?.copyWith(fontFamily: StyleScheme.engFontFamily),
               ),
-              ShadOption(value: ThemeMode.light, child: getThemeWidget(ThemeMode.light),),
-              ShadOption(value: ThemeMode.dark, child: getThemeWidget(ThemeMode.dark),),
-              ShadOption(value: ThemeMode.system, child: getThemeWidget(ThemeMode.system),),
+              ShadOption(
+                value: ThemeMode.light,
+                child: getThemeWidget(ThemeMode.light),
+              ),
+              ShadOption(
+                value: ThemeMode.dark,
+                child: getThemeWidget(ThemeMode.dark),
+              ),
+              ShadOption(
+                value: ThemeMode.system,
+                child: getThemeWidget(ThemeMode.system),
+              ),
             ],
             onChanged: (value) {},
             selectedOptionBuilder: (BuildContext context, ThemeMode? value) {
-              return value==null?const Text('选择主题'):getThemeWidget(value);
+              return value == null ? const Text('选择主题') : getThemeWidget(value);
             },
           ),
-          SizedBox(width: 20.w,),
+          SizedBox(
+            width: 20.w,
+          ),
           const Icon(
             Icons.notifications_active_outlined,
           ),
@@ -153,7 +179,9 @@ class _MainDashboardState extends State<MainDashboard>{
               ),
             ),
           ),
-          SizedBox(width: 10.w,)
+          SizedBox(
+            width: 10.w,
+          )
         ],
       ),
       body: Row(
@@ -179,18 +207,20 @@ class _MainDashboardState extends State<MainDashboard>{
             thickness: 1,
             width: 1,
           ),
-          MainPanel(),
+          Expanded(child: subWidget ?? MainPanel()),
         ],
       ),
     );
   }
-  NavigationRailDestination getNavRailEntry(IconData data, String label){
+
+  NavigationRailDestination getNavRailEntry(IconData data, String label) {
     return NavigationRailDestination(
       icon: Icon(data),
       selectedIcon: Icon(data, color: context.theme.colorScheme.primary),
       label: Text(
         label,
-        style: context.theme.textTheme.titleSmall?.copyWith(letterSpacing: -0.5),
+        style:
+            context.theme.textTheme.titleSmall?.copyWith(letterSpacing: -0.5),
       ),
     );
   }

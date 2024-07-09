@@ -6,13 +6,13 @@ import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 import 'package:smart_edu/util/format_util.dart';
 
-class MainPanel extends StatefulWidget{
+class MainPanel extends StatefulWidget {
+  const MainPanel({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _MainPanelState();
 }
 
 class _MainPanelState extends State<MainPanel> {
-
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -20,7 +20,9 @@ class _MainPanelState extends State<MainPanel> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 15.w,),
+          SizedBox(
+            width: 15.w,
+          ),
           Expanded(
             child: ListView(
               children: [
@@ -62,53 +64,58 @@ class _MainPanelState extends State<MainPanel> {
           Padding(
             padding: EdgeInsets.only(left: 5.w, right: 0),
             child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
-                decoration: BoxDecoration(
-                  color: context.theme.colorScheme.surface,
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          child: Icon(
-                            Icons.person,
-                            size: 30.sp,
-                          ),
+                child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+              decoration: BoxDecoration(
+                color: context.theme.colorScheme.surface,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        child: Icon(
+                          Icons.person,
+                          size: 30.sp,
                         ),
-                        SizedBox(width: 20.w,),
-                        Wrap(
-                          direction: Axis.vertical,
-                          children: [
-                            Text(
-                              '李华',
-                              style: context.theme.textTheme.titleLarge?.copyWith(letterSpacing: -0.5),
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Wrap(
+                        direction: Axis.vertical,
+                        children: [
+                          Text(
+                            '李华',
+                            style: context.theme.textTheme.titleLarge
+                                ?.copyWith(letterSpacing: -0.5),
+                          ),
+                          Text(
+                            '8209220140',
+                            style:
+                                context.theme.textTheme.titleMedium?.copyWith(
+                              color: context.theme.colorScheme.onSurface
+                                  .withOpacity(0.6),
+                              fontWeight: FontWeight.w700,
                             ),
-                            Text(
-                              '8209220140',
-                              style: context.theme.textTheme.titleMedium?.copyWith(
-                                color: context.theme.colorScheme.onSurface.withOpacity(0.6),
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
-            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            )),
           )
         ],
       ),
     );
   }
 
-  Widget getPercentCard(double all, double now, String name){
+  Widget getPercentCard(double all, double now, String name) {
     return ShadCard(
-      padding: EdgeInsets.only(top: 15.h, left: 20.w, right: 20.w, bottom: 15.h),
+      padding:
+          EdgeInsets.only(top: 15.h, left: 20.w, right: 20.w, bottom: 15.h),
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,7 +169,9 @@ class _MainPanelState extends State<MainPanel> {
               ),
             ],
           ),
-          SizedBox(width: 20.w,),
+          SizedBox(
+            width: 20.w,
+          ),
           CircularPercentIndicator(
             radius: 42.w,
             lineWidth: 12.sp,
@@ -170,7 +179,8 @@ class _MainPanelState extends State<MainPanel> {
             percent: now / all,
             center: Text(
               FormatUtil.getPercent(now / all),
-              style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+              style: context.theme.textTheme.titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w500),
             ),
             progressColor: context.theme.colorScheme.primary,
             backgroundColor: context.theme.colorScheme.primary.withOpacity(0.2),

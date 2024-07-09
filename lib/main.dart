@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -6,14 +5,16 @@ import 'package:smart_edu/const/device.dart';
 import 'package:smart_edu/init_affairs.dart';
 import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/main_dashboard.dart';
+import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/widget/course_card.dart';
 import 'package:smart_edu/style/theme_vault.dart';
 
-void main(){
+void main() {
   uiInit();
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget{
+class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
@@ -38,7 +39,9 @@ class MainApp extends StatelessWidget{
             colorScheme: ThemeVault.dark.colorScheme,
           );
         },
-        home: const MainDashboard(),
+        home: const MainDashboard(
+          subWidget: CourseCard(),
+        ),
       ),
     );
   }
