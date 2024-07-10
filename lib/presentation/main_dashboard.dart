@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/teacher_page/classroom_page/classroom_application.dart';
+import 'package:smart_edu/presentation/teacher_page/textbook_page/textbook_application.dart';
 import 'package:smart_edu/presentation/widget/course_card.dart';
 import 'package:smart_edu/presentation/widget/exam_list.dart';
 import 'package:smart_edu/style/style_scheme.dart';
@@ -214,10 +216,10 @@ class _MainDashboardState extends State<MainDashboard> {
                     subWidget = ExamList();
                     break;
                   case 6:
-                    subWidget = MainPanel();
+                    subWidget = ClassroomApplication();
                     break;
                   case 7:
-                    subWidget = MainPanel();
+                    subWidget = TextbookApplication();
                     break;
                 }
               });
