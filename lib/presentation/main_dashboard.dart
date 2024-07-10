@@ -6,7 +6,10 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/page/course_sched.dart';
+import 'package:smart_edu/presentation/page/curriculum_plan.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/page/score_inquire.dart';
+import 'package:smart_edu/presentation/page/score_inquire_panel.dart';
 import 'package:smart_edu/presentation/widget/icon_chequer.dart';
 import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/style_scheme.dart';
@@ -56,10 +59,10 @@ class _MainDashboardState extends State<MainDashboard>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: context.theme.colorScheme.onInverseSurface,
+      backgroundColor: context.theme.colorScheme.surface,
       appBar: AppBar(
         backgroundColor: context.theme.colorScheme.surface,
-        toolbarHeight: 60.h,
+        toolbarHeight: 65,
         leadingWidth: 400.w,
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
@@ -67,6 +70,7 @@ class _MainDashboardState extends State<MainDashboard>{
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Wrap(
             runAlignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             spacing: 10.w,
             children: [
               Icon(
@@ -82,11 +86,11 @@ class _MainDashboardState extends State<MainDashboard>{
               Text(
                 'CSU Academy',
                 style: context.theme.textTheme.titleLarge?.copyWith(
-                  letterSpacing: -0.7,
+                  letterSpacing: -0.5,
                   fontWeight: FontWeight.w500,
                   fontFamily: StyleScheme.engFontFamily,
                   color: context.theme.colorScheme.primary,
-                  fontSize: 20.sp,
+                  fontSize: 25.sp,
                 ),
               ),
             ],
@@ -99,7 +103,7 @@ class _MainDashboardState extends State<MainDashboard>{
             return SearchBar(
               hintText: '搜索功能',
               constraints: BoxConstraints(
-                maxHeight: 40.h,
+                maxHeight: 40,
                 maxWidth: 600.w,
                 minHeight: 30.h,
               ),
@@ -166,26 +170,37 @@ class _MainDashboardState extends State<MainDashboard>{
         ],
       ),
       body: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          NavigationRail(
-            useIndicator: true,
-            backgroundColor: context.theme.colorScheme.surface,
-            labelType: NavigationRailLabelType.all,
-            selectedIndex: 0,
-            onDestinationSelected: (index) {
-              print('@@@@@@@@@@@@index: $index');
-              ProvManager.pageProv.setPage(index);
-            },
-            destinations: [
-              getNavRailEntry(Icons.home, '主页'),
-              getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
-              getNavRailEntry(Icons.book_outlined, '选课'),
-              getNavRailEntry(Icons.grade, '成绩'),
-              getNavRailEntry(Icons.stacked_line_chart, '培养管理'),
-              getNavRailEntry(CupertinoIcons.pencil_circle, '我的考试'),
-              getNavRailEntry(Icons.rate_review_outlined, '教学评价'),
-              getNavRailEntry(Icons.school_outlined, '毕业设计'),
-            ],
+          SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: IntrinsicHeight(
+                child: NavigationRail(
+                  useIndicator: true,
+                  backgroundColor: context.theme.colorScheme.surface,
+                  labelType: NavigationRailLabelType.all,
+                  selectedIndex: 2,
+                  onDestinationSelected: (index) {
+                    print('@@@@@@@@@@@@index: $index');
+                    ProvManager.pageProv.setPage(index);
+                  },
+                  destinations: [
+                    getNavRailEntry(Icons.home, '主页'),
+                    getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
+                    getNavRailEntry(Icons.book_outlined, '选课'),
+                    getNavRailEntry(Icons.grade, '成绩'),
+                    getNavRailEntry(Icons.stacked_line_chart, '培养管理'),
+                    getNavRailEntry(CupertinoIcons.pencil_circle, '我的考试'),
+                    getNavRailEntry(Icons.rate_review_outlined, '教学评价'),
+                    getNavRailEntry(Icons.school_outlined, '毕业设计'),
+                  ],
+                ),
+              ),
+            ),
           ),
           const VerticalDivider(
             thickness: 1,
@@ -203,9 +218,9 @@ class _MainDashboardState extends State<MainDashboard>{
                 case 2:
                   return const CourseSched();
                 case 3:
-                  return const Expanded(child:NavigationSide());
+                  return const ScoreInquirePanel();
                 case 4:
-                  return const MainPanel();
+                  return const CurriculumPlan();
                 case 5:
                   return const MainPanel();
                 case 6:

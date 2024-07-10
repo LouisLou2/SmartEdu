@@ -131,6 +131,7 @@ class _MainPanelState extends State<MainPanel> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -430,7 +431,7 @@ class _MainPanelState extends State<MainPanel> {
                     ),
                   ],
                 ),
-              )
+              ),
             ),
           )
         ],
