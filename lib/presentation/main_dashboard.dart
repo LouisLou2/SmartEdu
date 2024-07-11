@@ -6,6 +6,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
 import 'package:smart_edu/presentation/teacher_page/classroom_page/classroom_application.dart';
+import 'package:smart_edu/presentation/teacher_page/exam_arrange_page/exam_application_form.dart';
 import 'package:smart_edu/presentation/teacher_page/textbook_page/textbook_application.dart';
 import 'package:smart_edu/presentation/widget/course_card.dart';
 import 'package:smart_edu/presentation/widget/exam_list.dart';
@@ -210,7 +211,7 @@ class _MainDashboardState extends State<MainDashboard> {
                     subWidget = MainPanel();
                     break;
                   case 4:
-                    subWidget = MainPanel();
+                    subWidget = ExamApplicationForm();
                     break;
                   case 5:
                     subWidget = ExamList();
