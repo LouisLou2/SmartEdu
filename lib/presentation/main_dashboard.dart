@@ -6,6 +6,8 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
 import 'package:smart_edu/presentation/teacher_page/classroom_page/classroom_application.dart';
+import 'package:smart_edu/presentation/teacher_page/course_schedule_page/course_preview_card.dart';
+import 'package:smart_edu/presentation/teacher_page/course_schedule_page/course_schedule_preview.dart';
 import 'package:smart_edu/presentation/teacher_page/exam_arrange_page/exam_application_form.dart';
 import 'package:smart_edu/presentation/teacher_page/textbook_page/textbook_application.dart';
 import 'package:smart_edu/presentation/widget/course_card.dart';
@@ -205,7 +207,7 @@ class _MainDashboardState extends State<MainDashboard> {
                     subWidget = MainPanel();
                     break;
                   case 2:
-                    subWidget = MainPanel();
+                    subWidget = CourseSchedulePreview();
                     break;
                   case 3:
                     subWidget = MainPanel();
