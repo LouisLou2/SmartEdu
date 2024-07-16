@@ -211,7 +211,7 @@ class _CirriculumPlanState extends State<CurriculumPlan> {
                                         fontWeight: FontWeight.w500,
                                         color: context.theme.colorScheme.onPrimary,
                                       ),
-                                    )
+                                    ),
                                 ),
                               ],
                             ),

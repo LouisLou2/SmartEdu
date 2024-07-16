@@ -4,12 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
-import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/page/course_sched.dart';
 import 'package:smart_edu/presentation/page/curriculum_plan.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
+import 'package:smart_edu/presentation/page/my_profile.dart';
 import 'package:smart_edu/presentation/page/score_inquire.dart';
 import 'package:smart_edu/presentation/page/score_inquire_panel.dart';
+import 'package:smart_edu/presentation/page/t_page/course_schedule_preview.dart';
 import 'package:smart_edu/presentation/widget/icon_chequer.dart';
 import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/style_scheme.dart';
@@ -25,6 +26,24 @@ class MainDashboard extends StatefulWidget{
 }
 
 class _MainDashboardState extends State<MainDashboard>{
+
+  Widget getTerminalWidget(int role) {
+    late String text;
+    switch (role) {
+      case 0:
+        text = 'Student';
+        break;
+      case 1:
+        text = 'Teacher';
+        break;
+      case 2:
+        text = 'AAO Admin';
+        break;
+    }
+    return Text(
+      text,
+    );
+  }
 
   Widget getThemeWidget(ThemeMode mode){
     IconData data;
@@ -139,6 +158,26 @@ class _MainDashboardState extends State<MainDashboard>{
           },
         ),
         actions: [
+          ShadSelect<int>(
+            placeholder: const Text('Terminal Type'),
+            options: [
+              Text(
+                'Terminal',
+                style: context.theme.textTheme.titleMedium?.copyWith(fontFamily: StyleScheme.engFontFamily),
+              ),
+              ShadOption(value: 0, child: getTerminalWidget(0),),
+              ShadOption(value: 1, child: getTerminalWidget(1),),
+              ShadOption(value: 2, child: getTerminalWidget(2),),
+            ],
+            onChanged: (value) {
+              if(value==2){
+                Navigator.pushNamed(context, '/aao_admin');
+              }
+            },
+            selectedOptionBuilder: (BuildContext context, int? value) {
+              return value==null?const Text('选择'):getTerminalWidget(value);
+            },
+          ),
           ShadSelect<ThemeMode>(
             placeholder: const Text('选择主题'),
             options: [
@@ -179,53 +218,66 @@ class _MainDashboardState extends State<MainDashboard>{
                 minHeight: MediaQuery.of(context).size.height,
               ),
               child: IntrinsicHeight(
-                child: NavigationRail(
-                  useIndicator: true,
-                  backgroundColor: context.theme.colorScheme.surface,
-                  labelType: NavigationRailLabelType.all,
-                  selectedIndex: 2,
-                  onDestinationSelected: (index) {
-                    print('@@@@@@@@@@@@index: $index');
-                    ProvManager.pageProv.setPage(index);
+                child: Selector<PageProv, int>(
+                  selector: (context, prov) => prov.page[0],
+                  shouldRebuild: (prev, next) => prev != next,
+                  builder: (context, pageIndex, child) {
+                    return NavigationRail(
+                      useIndicator: true,
+                      backgroundColor: context.theme.colorScheme.surface,
+                      labelType: NavigationRailLabelType.all,
+                      selectedIndex: pageIndex,
+                      onDestinationSelected: (index) {
+                        if(index==9){
+                          Navigator.pushNamed(context, '/aao_admin');
+                        }
+                        print('@@@@@@@@@@@@index: $index');
+                        ProvManager.pageProv.setPage(0, index);
+                      },
+                      destinations: [
+                        getNavRailEntry(Icons.home, '主页'),
+                        getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
+                        getNavRailEntry(Icons.book_outlined, '课表'),
+                        getNavRailEntry(Icons.book_outlined, '选课'),
+                        getNavRailEntry(Icons.grade, '成绩'),
+                        getNavRailEntry(Icons.stacked_line_chart, '培养管理'),
+                        getNavRailEntry(CupertinoIcons.pencil_circle, '我的考试'),
+                        getNavRailEntry(Icons.rate_review_outlined, '教学评价'),
+                        getNavRailEntry(Icons.school_outlined, '毕业设计'),
+                        getNavRailEntry(Icons.school_outlined, 'Test AAO'),
+                      ],
+                    );
                   },
-                  destinations: [
-                    getNavRailEntry(Icons.home, '主页'),
-                    getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
-                    getNavRailEntry(Icons.book_outlined, '选课'),
-                    getNavRailEntry(Icons.grade, '成绩'),
-                    getNavRailEntry(Icons.stacked_line_chart, '培养管理'),
-                    getNavRailEntry(CupertinoIcons.pencil_circle, '我的考试'),
-                    getNavRailEntry(Icons.rate_review_outlined, '教学评价'),
-                    getNavRailEntry(Icons.school_outlined, '毕业设计'),
-                  ],
-                ),
               ),
             ),
+          ),
           ),
           const VerticalDivider(
             thickness: 1,
             width: 1,
           ),
           Selector<PageProv, int>(
-            selector: (context, prov) => prov.page,
+            selector: (context, prov) => prov.page[0],
             shouldRebuild: (prev, next) => prev != next,
             builder: (context, pageIndex, child) {
               switch (pageIndex) {
                 case 0:
                   return const MainPanel();
                 case 1:
-                  return const Center();
+                  return const MyProfile();
                 case 2:
                   return const CourseSched();
                 case 3:
-                  return const ScoreInquirePanel();
+                  return const CourseSchedulePreview();
                 case 4:
-                  return const CurriculumPlan();
+                  return const ScoreInquirePanel();
                 case 5:
-                  return const MainPanel();
+                  return const CurriculumPlan();
                 case 6:
                   return const MainPanel();
                 case 7:
+                  return const MainPanel();
+                case 8:
                   return const MainPanel();
                 default:
                   return const MainPanel();

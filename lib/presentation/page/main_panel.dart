@@ -294,13 +294,11 @@ class _MainPanelState extends State<MainPanel> {
                         ),
                       ),
                     ),
-                    Align(
-                      child: Text(
-                        '2022 软件工程',
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          color: Colors.grey,
-                        ),
+                    Text(
+                      '2022 软件工程',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        color: Colors.grey,
                       ),
                     ),
                     SizedBox(height: 20.h,),
@@ -433,7 +431,7 @@ class _MainPanelState extends State<MainPanel> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

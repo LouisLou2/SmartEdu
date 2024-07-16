@@ -47,6 +47,9 @@ dependencies:
   badges: ^3.1.2
   pluto_grid: ^8.0.0
   faker: ^2.1.0
+  number_paginator: ^0.4.1
+  dio: ^5.5.0+1
+  toastification: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +91,8 @@ flutter:
   fonts:
     - family: GoogleSans
       fonts:
+        - asset: assets/font/GoogleSans-Light.ttf
+          weight: 300
         - asset: assets/font/GoogleSans-Regular.ttf
           weight: 400
         - asset: assets/font/GoogleSans-Bold.ttf
@@ -98,7 +103,7 @@ flutter:
       fonts:
         - asset: assets/font/NotoSansSC-Regular.ttf
           weight: 400
-        - asset: assets/font/NotoSansSC-SemiBold.ttf
+        - asset: assets/font/NotoSansSC-Medium.ttf
           weight: 500
         - asset: assets/font/NotoSansSC-Bold.ttf
           weight: 700
