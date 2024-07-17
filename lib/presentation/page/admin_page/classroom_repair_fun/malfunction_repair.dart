@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -22,6 +23,8 @@ import 'package:smart_edu/state/repair_prov.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 import 'package:smart_edu/util/pluto_table_util.dart';
 
+import '../../../../helper/toast_helper.dart';
+
 class MalfunctionRepair extends StatefulWidget {
   const MalfunctionRepair({Key? key}) : super(key: key);
 
@@ -30,6 +33,8 @@ class MalfunctionRepair extends StatefulWidget {
 }
 
 class _MalfunctionRepairState extends State<MalfunctionRepair> {
+  final TextEditingController _textEditingController = TextEditingController();
+
   List<PlutoColumn> plutoColumns = <PlutoColumn>[
     PlutoColumn(
       title: '编号',
@@ -108,6 +113,7 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
       },
     )
   ];
+
   List<PlutoRow> getRowFromReports(List<Report> reports) {
     List<PlutoRow> plutoRows = reports.map((report) {
       return PlutoRow(cells: {
@@ -134,28 +140,27 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
           ),
         )),
         'operation': PlutoCell(
-            value: ShadButton(
-          onPressed: () {
-            final repairInfos = [
-              (title: '维修开始时间', value: ''),
-              (title: '维修结束时间', value: ''),
-              (title: '维修详情', value: ''),
-            ];
-            showShadDialog(
-              context: context,
-              builder: (context) => ShadDialog(
-                title: const Text('维修审批'),
-                description: const Text(
-                    "您现在正在进行维修审批操作，请仔细阅读维修申请信息，确认信息无误后进行审批。审批后将无法撤回，请谨慎操作！"),
-                content: Container(
-                  width: 375,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: repairInfos
-                        .map(
-                          (p) => Row(
+            value: report.status=="未维修"?ShadButton(
+              onPressed: () {
+                repairProv.setNowReportId(report.reportId?.toInt()??0);
+                final repairInfos = [
+                  (title: '维修详情', value: ''),
+                ];
+                showShadDialog(
+                  context: context,
+                  builder: (context) => ShadDialog(
+                    title: const Text('维修审批'),
+                    description: const Text(
+                        "您现在正在进行维修审批操作，请仔细阅读维修申请信息，确认信息无误后进行审批。审批后将无法撤回，请谨慎操作！"),
+                    content: Container(
+                      width: 375,
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: repairInfos
+                            .map(
+                              (p) => Row(
                             children: [
                               Expanded(
                                 child: Text(
@@ -167,20 +172,42 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
                               const SizedBox(width: 16),
                               Expanded(
                                 flex: 3,
-                                child: ShadInput(initialValue: p.value),
+                                child: ShadInput(
+
+                                  controller: _textEditingController,
+                                  onChanged: (value) {
+                                    repairProv.setNowDetail(value);
+                                  },
+                                  maxLines: 3,
+                                  minLines: 3,
+
+                                ),
                               ),
                             ],
                           ),
                         )
-                        .toList(),
+                            .toList(),
+                      ),
+                    ),
+
+                    actions:  [
+                      ShadButton(text: Text('确认'),
+                          onPressed:(){
+                            repairProv.carryOutRepair().then((value) {
+                              if(true){
+                                int idx=stateManager.currentRowIdx??2;
+                                stateManager.removeCurrentRow();
+                                stateManager.insertRows(idx, [getPlutoRowFromCheckedReport(report)]);
+                                Navigator.of(context).pop();
+                              }
+                            });
+                          }
+                      )],
                   ),
-                ),
-                actions: const [ShadButton(text: Text('确认'))],
-              ),
-            );
-          },
-          text: Text("审批"),
-        ))
+                );
+              },
+              text: Text("审批"),
+            ):Icon(LucideIcons.check))
       });
     }).toList();
 
@@ -190,22 +217,11 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
   final RepairProv repairProv = ProvManager.repairProv;
   final bp = ProvManager.baseInfoProv;
   final NumberPaginatorController controller = NumberPaginatorController();
-
-  late OptionSection campusOptions;
-  late OptionSection buildingOptions;
-  late List<Campus> campusList;
   late PlutoGridStateManager stateManager; // 声明一个变量来存储stateManager
+
 
   @override
   void initState() {
-    campusList = [
-      Campus(campusId: 1, campus_name: '铁道校区', building: ['世纪楼', '铁2舍']),
-      Campus(campusId: 2, campus_name: '校本部', building: ['创业楼', '教学楼']),
-      Campus(campusId: 3, campus_name: '新校区', building: ['A座', 'B座']),
-    ];
-    campusOptions = OptionSection.fromCampus(campusList);
-
-    buildingOptions = OptionSection.fromBuilding(campusList[0].building);
 
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -366,6 +382,7 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
                       flex: 7,
                       child: PlutoGrid(
                         columns: plutoColumns,
+                        mode: PlutoGridMode.readOnly,
                         configuration: PlutoGridConfiguration(
                             style: PlutoTableUtil.gridStyleConfig(context)),
                         rows: getRowFromReports(repairProv.nowReports),
@@ -435,4 +452,34 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
       },
     );
   }
-}
+
+  PlutoRow getPlutoRowFromCheckedReport(Report report){
+    return PlutoRow(cells: {
+      'report_id': PlutoCell(value: report.reportId.toString()),
+      'report_time': PlutoCell(value: report.reportTime),
+      'campus_name': PlutoCell(value: report.campusName),
+      'campus_id': PlutoCell(value: report.campusId.toString()),
+      'building': PlutoCell(value: report.building),
+      'classroom_id': PlutoCell(value: report.classroomId.toString()),
+      'classroom_name': PlutoCell(value: report.classroomName),
+      'status': PlutoCell(value: "已维修"),
+      'fault_desc':PlutoCell(
+        value: ShadButton(
+          text: const Text(
+            '详情',
+          ),
+          onPressed: () => showShadSheet(
+            side: ShadSheetSide.right,
+            context: context,
+            builder: (context) => RepairDetail(
+              side: ShadSheetSide.right,
+              reportDetail: report,
+            ),
+          ),
+        )
+      ),
+      'operation':PlutoCell(
+        value: Icon(LucideIcons.check)
+      )
+  });
+}}

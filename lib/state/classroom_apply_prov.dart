@@ -79,4 +79,37 @@ class ApplyProv with ChangeNotifier {
     ++searchCount;
     notifyListeners();
   }
+
+
+
+  /*------------------------------------------------------*/
+
+  int? nowReportId;
+  String? nowDetail;
+  int nowType=0;
+  void setNowReportId(int id) {
+    nowReportId = id;
+    notifyListeners();
+  }
+  void setNowDetail(String detail) {
+    nowDetail = detail;
+    notifyListeners();
+  }
+  void setNowType(int type) {
+    nowType = type;
+    notifyListeners();
+  }
+//审批教室申请
+  Future<bool> applyClassroom() async {
+    Result<String> resp = await ApplyDs.applyClassroom(nowReportId!, nowDetail!,nowType!);
+    if (resp.isSuccess) {
+      ToastHelper.showSuccess("审批成功");
+      return true;
+    } else {
+      ToastHelper.showErrorWithDesc("审批失败",'Failed');
+      return false;
+    }
+    notifyListeners();
+  }
+  /*------------------------------------------------------*/
 }

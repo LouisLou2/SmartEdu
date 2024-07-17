@@ -36,4 +36,22 @@ class RepairDs {
       return GlobalExceptionHelper.getErrorResInfo(e);
     }
   }
+  //审批维修报表
+  static Future<Result<String>> carryOutRepair(int reportId,String detail) async {
+    try {
+      Response response = await _baseDio.get(NetworkPathCollector.carryOutRepair,
+          data: {
+            "reportId":reportId,
+            "maintDetail":detail
+
+          }, options: NetworkConfig.json_json);
+      Resp resp = Resp.fromJson(response.data);
+      if (ResCode.isOk(resp.code)) {
+        return Result.success(resp.code.toString());
+      }
+      return Result.abnormal(resp.code);
+    } catch (e) {
+      return GlobalExceptionHelper.getErrorResInfo(e);
+    }
+  }
 }

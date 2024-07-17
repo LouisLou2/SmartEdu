@@ -38,8 +38,7 @@ class ProvManager {
     userProv = UserProv();
     await UserProv.example();
 
-    baseInfoProv.getCampusFromNet();
-    baseInfoProv.getSchoolsFromNet();
+    await baseInfoProv.getBaseInfos();
   }
 
   static List<SingleChildWidget> get getProvList => [

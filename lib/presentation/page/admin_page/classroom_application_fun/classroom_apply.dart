@@ -19,6 +19,8 @@ import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 import 'package:smart_edu/util/pluto_table_util.dart';
 
+import '../../../../helper/toast_helper.dart';
+
 class ClassroomList extends StatefulWidget {
   const ClassroomList({Key? key}) : super(key: key);
 
@@ -43,6 +45,7 @@ class ClassroomList extends StatefulWidget {
 class _ClassroomListState extends State<ClassroomList> {
   final BaseInfoProv baseInfoProv = ProvManager.baseInfoProv;
   final ApplyProv applyProv = ProvManager.applyProv;
+  final TextEditingController textEditingController = TextEditingController();
   final NumberPaginatorController controller = NumberPaginatorController();
   ShadPopoverController popoverController = ShadPopoverController();
 
@@ -83,6 +86,16 @@ class _ClassroomListState extends State<ClassroomList> {
                   text: Text("审批"),
                   onPressed: () {
                     final targetReserveId = e.reserveId;
+                    final processTypes = {
+                      0: '通过',
+                      1: '不通过',
+                      2: '暂不处理',
+                    };
+                    final processTypesInvert={
+                      '通过':0,
+                      '不通过':1,
+                      '暂不处理':2,
+                    };
                     showShadDialog(
                         context: context,
                         builder: (context) => ShadDialog(
@@ -91,23 +104,43 @@ class _ClassroomListState extends State<ClassroomList> {
                                   children: [
                                     ShadSelect<String>(
                                         placeholder: const Text('选择处理类型'),
-                                        options: const [
-                                          Text("不通过"),
+                                        options:  [
+                                          //构建三个选项框
                                           Text("通过"),
-                                          Text("暂不处理")
+                                          Text("不通过"),
+                                          Text("暂不处理"),
                                         ],
+                                        onChanged: (value) {
+                                          applyProv.setNowType(processTypesInvert[value]!);
+                                        },
                                         selectedOptionBuilder:
                                             (context, value) {
                                           return Text(
-                                              value.toString() ?? "hello");
+                                              processTypes[value]!);
                                         }),
                                     ShadInput(
                                       minLines: 4,
                                       maxLines: 8,
+                                      controller: textEditingController,
                                       placeholder: Text("填写审批意见"),
+                                      onChanged: (value) {
+                                        applyProv.setNowDetail(value);
+                                      },
                                     ),
                                     ShadButton(
                                       text: const Text("提交"),
+                                      onPressed: (){
+                                        print("object");
+                                        applyProv.setNowReportId(e.reserveId?.toInt()??0);
+                                        applyProv.applyClassroom().then((value) {
+                                          if(value){
+                                            stateManager.removeCurrentRow();
+                                          }else{
+                                            ToastHelper.showErrorWithDesc("审批失败", 'Failed');
+                                          }
+                                          Navigator.of(context).pop();
+                                        });
+                                      },
                                     ),
                                   ],
                                 ),
@@ -416,79 +449,7 @@ class _ClassroomListState extends State<ClassroomList> {
                       configuration: PlutoGridConfiguration(
                           style: PlutoTableUtil.gridStyleConfig(context)),
                       onLoaded: (e) => stateManager = e.stateManager,
-                      rows: [
-                        ...list.map((e) => PlutoRow(cells: {
-                              'reserveId': PlutoCell(value: e.reserveId),
-                              'teacherId': PlutoCell(value: e.teacherId),
-                              'time': PlutoCell(
-                                  value: getApplyTime(
-                                      year: e.year,
-                                      week: e.week,
-                                      dayOfWeek: e.dayOfWeek,
-                                      periodFrom: e.periodFrom,
-                                      periodTo: e.periodTo)),
-                              'reason': PlutoCell(value: e.reason),
-                              'class_name': PlutoCell(value: e.className),
-                              'actName': PlutoCell(value: e.actName),
-                              'reasonDetail': PlutoCell(
-                                  value: ShadPopover(
-                                controller: popoverController,
-                                popover: (context) {
-                                  return Padding(
-                                    padding: EdgeInsets.all(10.r),
-                                    child: Text(e.reasonDetail ?? ""),
-                                  );
-                                },
-                                child: ShadButton(
-                                  text: Text("详情"),
-                                  onPressed: () {
-                                    popoverController.toggle();
-                                  },
-                                ),
-                              )),
-                              'operation': PlutoCell(
-                                value: ShadButton(
-                                  text: Text("审批"),
-                                  onPressed: () {
-                                    final targetReserveId = e.reserveId;
-                                    showShadDialog(
-                                        context: context,
-                                        builder: (context) => ShadDialog(
-                                              content: Container(
-                                                child: Column(
-                                                  children: [
-                                                    ShadSelect<String>(
-                                                        placeholder: const Text(
-                                                            '选择处理类型'),
-                                                        options: const [
-                                                          Text("不通过"),
-                                                          Text("通过"),
-                                                          Text("暂不处理")
-                                                        ],
-                                                        selectedOptionBuilder:
-                                                            (context, value) {
-                                                          return Text(value
-                                                                  .toString() ??
-                                                              "hello");
-                                                        }),
-                                                    ShadInput(
-                                                      minLines: 4,
-                                                      maxLines: 8,
-                                                      placeholder:
-                                                          Text("填写审批意见"),
-                                                    ),
-                                                    ShadButton(
-                                                      text: const Text("提交"),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ));
-                                  },
-                                ),
-                              ),
-                            }))
-                      ],
+                      rows: getRowsFromClassroomApply(list),
                     ),
                   );
                 },

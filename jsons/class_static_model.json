@@ -192,7 +192,29 @@
                 "sum": 59
             }
     },
-
+    "fault_carry_out":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "faults": [
+                {
+                    "faultId": 1,
+                    "reportTime": "2024-12-1",
+                    "campusName": "铁道校区",
+                    "campusId": 4,
+                    "building": "世纪楼",
+                    "classroomId": 10,
+                    "classroomName": "A404",
+                    "faultDesc": "岁阿萨法",
+                    "status": 1,
+                    "maintFrom": "2024-12-3",
+                    "maintTo": "2024-12-5",
+                    "maintDetail": "不好说"
+                }
+            ],
+            "sum": 10
+        }
+    },
     "repairReport":{
         "code":200,
         "message":"success",
@@ -238,5 +260,181 @@
                 
             ],
         "sum":1000    }
+    },
+    "apply_classroom": {
+        "code": 200,
+        "message": "success",
+        "data": {
+            "classrooms": [
+                {
+                    "classroomId": 1,
+                    "classroomName": "A404",
+                    "campusName": "铁道校区",
+                    "building": "世纪楼",
+                    "status": 0,
+                    "seatNum": 98,
+                    "area": 100
+                }
+            ],
+            "sum": 100
+        }
+    },
+    "baseInfos": {
+        "code": 200,
+        "message": "成功",
+        "data": {
+            "campusVOList": [
+                {
+                    "campusId": 1,
+                    "campusName": "北区校园",
+                    "buildings": [
+                        "教学楼A",
+                        "实验楼B",
+                        "图书馆C",
+                        "学生宿舍D",
+                        "行政办公楼E"
+                    ]
+                },
+                {
+                    "campusId": 2,
+                    "campusName": "南区校园",
+                    "buildings": [
+                        "科技楼F",
+                        "艺术楼G",
+                        "体育馆H",
+                        "食堂I",
+                        "图书馆J"
+                    ]
+                },
+                {
+                    "campusId": 3,
+                    "campusName": "西区校园",
+                    "buildings": [
+                        "计算机科研楼K",
+                        "生物科技楼L",
+                        "物理实验楼M",
+                        "化学实验楼N",
+                        "天文观测塔O"
+                    ]
+                },
+                {
+                    "campusId": 4,
+                    "campusName": "东区校园",
+                    "buildings": [
+                        "历史文化博物馆P",
+                        "语言学习中心Q",
+                        "音乐演奏厅R",
+                        "剧场S",
+                        "运动场T"
+                    ]
+                }
+            ],
+            "nowTermPart": false,
+            "earliestTermYear": 2024,
+            "earliestTermPart": false,
+            "nowWeek": 1,
+            "schoolMajorList": [
+                {
+                    "schoolId": 1,
+                    "schoolName": "计算机学院",
+                    "majors": [
+                        {
+                            "majorId": 1,
+                            "majorName": "软件工程"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 2,
+                    "schoolName": "马克思主义学院",
+                    "majors": [
+                        {
+                            "majorId": 2,
+                            "majorName": "社会科学"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 3,
+                    "schoolName": "数学与统计学院",
+                    "majors": [
+                        {
+                            "majorId": 3,
+                            "majorName": "数据分析"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 4,
+                    "schoolName": "地球科学学院",
+                    "majors": [
+                        {
+                            "majorId": 4,
+                            "majorName": "地球物理学"
+                        },
+                        {
+                            "majorId": 7,
+                            "majorName": "环境科学"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 5,
+                    "schoolName": "物理与电子工程学院",
+                    "majors": []
+                },
+                {
+                    "schoolId": 6,
+                    "schoolName": "医学系",
+                    "majors": [
+                        {
+                            "majorId": 5,
+                            "majorName": "临床医学"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 7,
+                    "schoolName": "资源与环境科学学院",
+                    "majors": [
+                        {
+                            "majorId": 9,
+                            "majorName": "生态学"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 8,
+                    "schoolName": "国际交流学院",
+                    "majors": [
+                        {
+                            "majorId": 6,
+                            "majorName": "跨文化研究"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 9,
+                    "schoolName": "经济与管理学院",
+                    "majors": [
+                        {
+                            "majorId": 8,
+                            "majorName": "经济学"
+                        }
+                    ]
+                },
+                {
+                    "schoolId": 10,
+                    "schoolName": "法学院",
+                    "majors": [
+                        {
+                            "majorId": 10,
+                            "majorName": "法律"
+                        }
+                    ]
+                }
+            ]
+        }
     }
+
 }

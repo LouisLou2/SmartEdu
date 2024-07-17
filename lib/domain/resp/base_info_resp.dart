@@ -2,7 +2,7 @@
 import '../entity/campus.dart';
 import '../entity/school.dart';
 
-class BaseInfoReq {
+class BaseInfoResp {
   final List<Campus> campusList;
   final bool nowTermPart;
   final int nowWeek;
@@ -10,7 +10,7 @@ class BaseInfoReq {
   final bool earliestTermPart;
   final List<School> schoolMajorList;
 
-  BaseInfoReq(
+  BaseInfoResp(
       this.campusList,
       this.nowTermPart,
       this.earliestTermYear,
@@ -19,8 +19,8 @@ class BaseInfoReq {
       this.schoolMajorList,
       );
 
-  factory BaseInfoReq.fromJson(Map<String, dynamic> json) {
-    return BaseInfoReq(
+  factory BaseInfoResp.fromJson(Map<String, dynamic> json) {
+    return BaseInfoResp(
       ( json['campusVOList'] as List ).map<Campus>((e) => Campus.fromJson(e)).toList(),
       json['nowTermPart'],
       json['earliestTermYear'],

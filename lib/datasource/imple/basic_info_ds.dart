@@ -5,6 +5,7 @@ import 'package:smart_edu/datasource/manage/network_manager.dart';
 import 'package:smart_edu/datasource/manage/network_path_collector.dart';
 import 'package:smart_edu/domain/entity/campus.dart';
 import 'package:smart_edu/domain/entity/school.dart';
+import 'package:smart_edu/domain/resp/base_info_resp.dart';
 import 'package:smart_edu/helper/global_exception_handler.dart';
 
 import '../../domain/general/resp.dart';
@@ -12,7 +13,21 @@ import '../../domain/general/result.dart';
 
 class BaseInfoDs {
   static final _baseDio = NetworkManager.normalDio;
-
+  static Future<Result<BaseInfoResp>> getBaseInfos() async {
+    try{
+      Response response = await _baseDio.get(
+        NetworkPathCollector.baseInfo,
+        options: NetworkConfig.json_json,
+      );
+      Resp res = Resp.fromJson(response.data);
+      if(ResCode.isOk(res.code)){
+        return Result.success(BaseInfoResp.fromJson(res.data));
+      }
+      return Result.abnormal(res.code);
+    }catch(e){
+      return GlobalExceptionHelper.getErrorResInfo(e);
+    }
+  }
   static Future<Result<List<School>>> getSchoolMajor() async {
     try {
       Response response = await _baseDio.get(

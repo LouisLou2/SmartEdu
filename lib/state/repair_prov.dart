@@ -27,8 +27,10 @@ class RepairProv with ChangeNotifier {
   int searchCount = 0;
   bool get isStudentsNull => nowReports.isEmpty;
 
-  /// *******************
+  /// *******************    status = json['status']==0?"已维修":"未维修";
 
+  int? nowReportId;
+  String? nowDetail;
   /// *******************
 
   RepairProv() {
@@ -38,6 +40,15 @@ class RepairProv with ChangeNotifier {
   }
 
   int get pageTotal => (nowSum / AppParam.pageSize).ceil();
+
+  void setNowReportId(int id) {
+    nowReportId = id;
+    notifyListeners();
+  }
+  void setNowDetail(String detail) {
+    nowDetail = detail;
+    notifyListeners();
+  }
 
   Future setReqPageAndSearch(int ind) async {
     nowPageInd = ind;
@@ -78,6 +89,17 @@ class RepairProv with ChangeNotifier {
       ToastHelper.showErrorWithouDesc("获取保修列表失败");
     }
     ++searchCount;
+    notifyListeners();
+  }
+  Future<bool> carryOutRepair() async {
+    Result<String> resp = await RepairDs.carryOutRepair(nowReportId!,nowDetail!);
+    if (resp.isSuccess) {
+      ToastHelper.showSuccess("审批成功");
+      return true;
+    } else {
+      ToastHelper.showErrorWithouDesc("审批失败");
+      return false;
+    }
     notifyListeners();
   }
 }

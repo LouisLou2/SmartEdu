@@ -23,7 +23,7 @@ class Report {
     classroomId = json['classroomId'];
     classroomName = json['classroomName'];
     faultDesc = json['faultDesc'];
-    status = json['status'];
+    status = json['status']==0?"已维修":"未维修";
   }
   num? reportId;
   String? reportTime;
@@ -33,7 +33,7 @@ class Report {
   num? classroomId;
   String? classroomName;
   String? faultDesc;
-  num? status;
+  String? status;
   num? get reportIdValue => reportId;
   String? get reportTimeValue => reportTime;
   String? get campusNameValue => campusName;
@@ -42,7 +42,7 @@ class Report {
   num? get classroomIdValue => classroomId;
   String? get classroomNameValue => classroomName;
   String? get faultDescValue => faultDesc;
-  num? get statusValue => status;
+  String? get statusValue => status;
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['report_id'] = reportId;

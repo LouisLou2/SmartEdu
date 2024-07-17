@@ -20,6 +20,9 @@ class OptionSection {
   OptionSection.fromBuilding(List<String> buildings)
       : title = '楼栋',
         options = buildings;
+  OptionSection.fromTypes(Map<int, String> types)
+      : title = 'Types',
+        options = types.values.toList();
 
   OptionSection.fromSchoolList(List<School> items)
       : title = 'Schools',

@@ -34,6 +34,11 @@ OptionSection getMajorList(List<Major> majors) {
   return optionSection;
 }
 
+OptionSection getTypes(Map<int,String> types) {
+  OptionSection optionSection = OptionSection(title: '类型', options: ['不限']);
+  optionSection.options.addAll(OptionSection.fromTypes(types).options);
+  return optionSection;
+}
 List<Widget> getTextList(
   List<OptionSection> list,
   BuildContext context,

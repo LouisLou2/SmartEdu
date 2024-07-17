@@ -38,4 +38,23 @@ class ApplyDs {
       return GlobalExceptionHelper.getErrorResInfo(e);
     }
   }
+
+  static Future<Result<String>> applyClassroom(
+      int reserveId,String detail,int result) async {
+    try {
+      Response response = await _baseDio.get(NetworkPathCollector.applyList,
+          data: {
+            "reserveId":reserveId,
+            "detail":detail,
+            "result":result
+          }, options: NetworkConfig.json_json);
+      Resp resp = Resp.fromJson(response.data);
+      if (ResCode.isOk(resp.code)) {
+        return Result.success(resp.code.toString());
+      }
+      return Result.abnormal(resp.code);
+    } catch (e) {
+      return GlobalExceptionHelper.getErrorResInfo(e);
+    }
+  }
 }
