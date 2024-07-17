@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_edu/datasource/imple/basic_info_ds.dart';
 import 'package:smart_edu/domain/entity/campus.dart';
-import 'package:smart_edu/presentation/page/toast_helper.dart';
+import 'package:smart_edu/helper/toast_helper.dart';
 
 import '../domain/entity/school.dart';
 import '../domain/general/result.dart';

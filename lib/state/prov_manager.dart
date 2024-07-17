@@ -1,12 +1,10 @@
 import 'package:provider/provider.dart';
-import 'package:smart_edu/state/admin_apply_prov.dart';
 import 'package:smart_edu/state/base_info_prov.dart';
 import 'package:smart_edu/state/classroom_apply_prov.dart';
 import 'package:smart_edu/state/page_prov.dart';
 import 'package:smart_edu/state/repair_prov.dart';
 import 'package:smart_edu/state/statics_page_prov.dart';
 import 'package:smart_edu/state/statics_prov.dart';
-import 'package:smart_edu/state/statics_view_prov.dart';
 
 import 'package:nested/nested.dart';
 import 'package:smart_edu/state/student_prov.dart';
@@ -15,9 +13,7 @@ import 'package:smart_edu/state/sidebar_prov.dart';
 import 'package:smart_edu/state/user_prov.dart';
 
 class ProvManager {
-  static late AdminApplyProv adminApplyProv;
   static late StaticsPageProv staticsPageProv;
-  static late StaticsViewProv staticsViewProv;
   static late BaseInfoProv baseInfoProv;
   static late StaticsProv staticsProv;
   static late StudentSearchProv studentSearchProv;
@@ -30,9 +26,7 @@ class ProvManager {
   static late UserProv userProv;
 
   static void init() async {
-    adminApplyProv = AdminApplyProv();
     staticsPageProv = StaticsPageProv();
-    staticsViewProv = StaticsViewProv();
     baseInfoProv = BaseInfoProv();
     staticsProv = StaticsProv();
     studentSearchProv = StudentSearchProv();
@@ -49,9 +43,7 @@ class ProvManager {
   }
 
   static List<SingleChildWidget> get getProvList => [
-        ChangeNotifierProvider.value(value: adminApplyProv),
         ChangeNotifierProvider.value(value: staticsPageProv),
-        ChangeNotifierProvider.value(value: staticsViewProv),
         ChangeNotifierProvider.value(value: baseInfoProv),
         ChangeNotifierProvider.value(value: staticsProv),
         ChangeNotifierProvider.value(value: studentSearchProv),

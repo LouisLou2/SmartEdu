@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:smart_edu/const/app_param.dart';
 import 'package:smart_edu/datasource/imple/apply_ds.dart';
-import 'package:smart_edu/datasource/imple/repair_ds.dart';
-import 'package:smart_edu/datasource/imple/statistic_ds.dart';
+
 import 'package:smart_edu/domain/entity/classroom_apply_datas.dart';
-import 'package:smart_edu/domain/entity/repair_report_model.dart';
-import 'package:smart_edu/domain/entity/student_statics_model.dart';
+
 import 'package:smart_edu/domain/req/classroom_statics_req.dart';
-import 'package:smart_edu/domain/req/repair_report_req.dart';
-import 'package:smart_edu/domain/req/stu_search_req.dart';
+
 import 'package:smart_edu/domain/resp/classroom_apply_resp.dart';
-import 'package:smart_edu/domain/resp/repair_report_resp.dart';
-import 'package:smart_edu/domain/resp/stu_search_resp.dart';
+
 import 'package:smart_edu/state/prov_manager.dart';
 
 import '../domain/general/result.dart';
-import '../domain/resp/tea_search_resp.dart';
+import '../helper/toast_helper.dart';
 
 class ApplyProv with ChangeNotifier {
   int nowSum = 0;
@@ -78,8 +74,7 @@ class ApplyProv with ChangeNotifier {
       nowClassrooms = resp.data!.applications!;
       notifyListeners();
     } else {
-      // ToastHelper.showFaultToast('Failed');
-      print("获取教室预约记录失败");
+      ToastHelper.showErrorWithDesc("获取教室预约失败",'Failed');
     }
     ++searchCount;
     notifyListeners();

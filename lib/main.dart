@@ -7,14 +7,13 @@ import 'package:smart_edu/init_affairs.dart';
 import 'package:smart_edu/presentation/page/admin_page/aao_admin_dash.dart';
 import 'package:smart_edu/presentation/page/admin_page/aao_main_panel.dart';
 import 'package:smart_edu/presentation/page/tea_page/classroom_apply_fun/classroom_apply_page.dart';
-import 'package:smart_edu/state/admin_apply_prov.dart';
 import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/state/statics_page_prov.dart';
-import 'package:smart_edu/state/statics_view_prov.dart';
 import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/main_dashboard.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
 import 'package:smart_edu/style/theme_vault.dart';
+import 'package:toastification/toastification.dart';
 
 void main() {
   runBeforeRun();
@@ -33,30 +32,32 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: DeviceDesignDraft.desktop,
-      child: ShadApp.material(
-          themeMode: ThemeMode.light,
-          materialThemeBuilder: (context, theme) {
-            if (theme.brightness == Brightness.light) {
+      child: ToastificationWrapper(
+        child: ShadApp.material(
+            themeMode: ThemeMode.light,
+            materialThemeBuilder: (context, theme) {
+              if (theme.brightness == Brightness.light) {
+                return theme.copyWith(
+                  primaryColorLight: ThemeVault.light.primaryColorLight,
+                  primaryColorDark: ThemeVault.light.primaryColorDark,
+                  textTheme: ThemeVault.light.textTheme,
+                  colorScheme: ThemeVault.light.colorScheme,
+                );
+              }
               return theme.copyWith(
-                primaryColorLight: ThemeVault.light.primaryColorLight,
-                primaryColorDark: ThemeVault.light.primaryColorDark,
-                textTheme: ThemeVault.light.textTheme,
-                colorScheme: ThemeVault.light.colorScheme,
+                primaryColorLight: ThemeVault.dark.primaryColorLight,
+                primaryColorDark: ThemeVault.dark.primaryColorDark,
+                textTheme: ThemeVault.dark.textTheme,
+                colorScheme: ThemeVault.dark.colorScheme,
               );
-            }
-            return theme.copyWith(
-              primaryColorLight: ThemeVault.dark.primaryColorLight,
-              primaryColorDark: ThemeVault.dark.primaryColorDark,
-              textTheme: ThemeVault.dark.textTheme,
-              colorScheme: ThemeVault.dark.colorScheme,
-            );
-          },
-          home: MultiProvider(
-            providers: ProvManager.getProvList,
-            child: const MainDashboard(
-              subWidget: AAOMainPanel(),
-            ),
-          )),
+            },
+            home: MultiProvider(
+              providers: ProvManager.getProvList,
+              child: const MainDashboard(
+                subWidget: AAOMainPanel(),
+              ),
+            )),
+      ),
     );
   }
 }

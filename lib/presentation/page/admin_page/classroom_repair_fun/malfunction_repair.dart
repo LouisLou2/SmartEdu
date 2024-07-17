@@ -16,7 +16,6 @@ import 'package:smart_edu/presentation/page/admin_page/pagination_bar.dart';
 import 'package:smart_edu/presentation/page/admin_page/classroom_repair_fun/repair_detail.dart';
 import 'package:smart_edu/presentation/anim_sidebar.dart';
 import 'package:smart_edu/presentation/widget/text_list.dart';
-import 'package:smart_edu/state/admin_apply_prov.dart';
 import 'package:smart_edu/state/base_info_prov.dart';
 import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/state/repair_prov.dart';

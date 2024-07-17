@@ -11,7 +11,7 @@ import 'package:smart_edu/domain/req/tea_search_req.dart';
 import 'package:smart_edu/domain/resp/class_statics_resp.dart';
 import 'package:smart_edu/domain/resp/classroom_statics_resp.dart';
 import 'package:smart_edu/domain/resp/tea_search_resp.dart';
-import 'package:smart_edu/presentation/page/toast_helper.dart';
+import 'package:smart_edu/helper/toast_helper.dart';
 import 'package:smart_edu/state/prov_manager.dart';
 
 class StaticsProv extends ChangeNotifier {
@@ -79,8 +79,7 @@ class StaticsProv extends ChangeNotifier {
       classStatics = result.data!.classes!;
       notifyListeners();
     } else {
-      // ToastHelper.showFaultToast("获取班级信息失败");
-      print("获取班级信息失败");
+      ToastHelper.showErrorWithouDesc("获取本校班级信息失败");
     }
   }
 
@@ -143,8 +142,7 @@ class StaticsProv extends ChangeNotifier {
       classroomStatics = result.data!.classrooms!;
       notifyListeners();
     } else {
-      // ToastHelper.showFaultToast("获取教室信息失败");
-      print("获取教室信息失败");
+      ToastHelper.showErrorWithouDesc("获取教室信息失败");
     }
   }
 
@@ -214,8 +212,7 @@ class StaticsProv extends ChangeNotifier {
       nowTeachers = resp.data!.teachers;
       notifyListeners();
     } else {
-      print("获取教师信息失败");
-      // ToastHelper.showFaultToast('Failed');
+      ToastHelper.showErrorWithouDesc("获取教师信息失败");
     }
     ++teacherSearchCount;
     notifyListeners();

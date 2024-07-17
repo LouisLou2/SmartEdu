@@ -8,6 +8,7 @@ import 'package:smart_edu/state/prov_manager.dart';
 
 import '../domain/general/result.dart';
 import '../domain/resp/tea_search_resp.dart';
+import '../helper/toast_helper.dart';
 
 class StudentSearchProv with ChangeNotifier {
   int nowSum = 0;
@@ -82,8 +83,7 @@ class StudentSearchProv with ChangeNotifier {
       nowStudents = resp.data!.students!;
       notifyListeners();
     } else {
-      // ToastHelper.showFaultToast('Failed');
-      print("获取students信息失败");
+      ToastHelper.showErrorWithouDesc("获取学生信息失败");
     }
     ++searchCount;
     notifyListeners();

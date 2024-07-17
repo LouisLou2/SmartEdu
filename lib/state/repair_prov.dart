@@ -12,6 +12,7 @@ import 'package:smart_edu/state/prov_manager.dart';
 
 import '../domain/general/result.dart';
 import '../domain/resp/tea_search_resp.dart';
+import '../helper/toast_helper.dart';
 
 class RepairProv with ChangeNotifier {
   int nowSum = 0;
@@ -74,8 +75,7 @@ class RepairProv with ChangeNotifier {
       nowReports = resp.data!.reports!;
       notifyListeners();
     } else {
-      // ToastHelper.showFaultToast('Failed');
-      print("获取保修列表失败");
+      ToastHelper.showErrorWithouDesc("获取保修列表失败");
     }
     ++searchCount;
     notifyListeners();

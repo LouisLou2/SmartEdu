@@ -13,7 +13,6 @@ import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/domain/entity/classroom_apply_datas.dart';
 import 'package:smart_edu/presentation/page/admin_page/pagination_bar.dart';
 import 'package:smart_edu/presentation/widget/text_list.dart';
-import 'package:smart_edu/state/admin_apply_prov.dart';
 import 'package:smart_edu/state/base_info_prov.dart';
 import 'package:smart_edu/state/classroom_apply_prov.dart';
 import 'package:smart_edu/state/prov_manager.dart';

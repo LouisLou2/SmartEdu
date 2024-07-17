@@ -14,7 +14,6 @@ import 'package:smart_edu/presentation/page/admin_page/pagination_bar.dart';
 import 'package:smart_edu/presentation/widget/text_list.dart';
 import 'package:smart_edu/state/base_info_prov.dart';
 import 'package:smart_edu/state/prov_manager.dart';
-import 'package:smart_edu/state/statics_view_prov.dart';
 import 'package:smart_edu/state/student_prov.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 import 'package:smart_edu/util/pluto_table_util.dart';

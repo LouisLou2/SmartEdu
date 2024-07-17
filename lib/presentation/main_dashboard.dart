@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/page/admin_page/aao_admin_dash.dart';
@@ -14,6 +15,8 @@ import 'package:smart_edu/presentation/page/tea_page/classroom_apply_fun/classro
 import 'package:smart_edu/presentation/page/tea_page/proctored_exam_fun/proctored_exam_page.dart';
 
 import 'package:smart_edu/presentation/page/tea_page/fault_report_fun/fault_report_page.dart';
+import 'package:smart_edu/state/page_prov.dart';
+import 'package:smart_edu/state/prov_manager.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 
 class MainDashboard extends StatefulWidget {
@@ -25,11 +28,10 @@ class MainDashboard extends StatefulWidget {
 }
 
 class _MainDashboardState extends State<MainDashboard> {
-  Widget? subWidget;
+  final PageProv pageProv = ProvManager.pageProv;
   @override
   void initState() {
     super.initState();
-    subWidget = widget.subWidget;
   }
 
   Widget getThemeWidget(ThemeMode mode) {
@@ -201,46 +203,47 @@ class _MainDashboardState extends State<MainDashboard> {
             labelType: NavigationRailLabelType.all,
             selectedIndex: 0,
             onDestinationSelected: (index) {
-              setState(() {
-                switch (index) {
-                  case 0:
-                    subWidget = const AAOMainPanel();
-                    break;
-                  case 1:
-                    subWidget = const StatisticShow();
-                    break;
-                  case 2:
-                    subWidget = const ApplicationBoard();
-                    break;
-                  case 3:
-                    subWidget = ProctoredExamPage();
-                    break;
-                  case 4:
-                    // subWidget = ExamApplicationForm();
-                    break;
-                  case 5:
-                    subWidget = ApplicationBoard();
-                    break;
-                  case 6:
-                    subWidget = ClassroomApplyPage();
-                    break;
-                  case 7:
-                    subWidget = FaultReportPage();
-                    break;
-                }
-              });
+              pageProv.setPage(2, index);
+
             },
             destinations: [
               getNavRailEntry(Icons.home, '主页'),
               getNavRailEntry(Icons.data_array, '统计'),
               getNavRailEntry(Icons.check, '审核'),
+              getNavRailEntry(Icons.check, '监考'),
+              getNavRailEntry(Icons.check, '教室申请'),
+              getNavRailEntry(Icons.check, '报修'),
             ],
           ),
           const VerticalDivider(
             thickness: 1,
             width: 1,
           ),
-          Expanded(child: subWidget ?? MainPanel()),
+
+          Expanded(child: Selector<PageProv,int>(
+            selector: (context, prov) => prov.page[2],
+            shouldRebuild: (pre,next)=>pre!=next,
+            builder:(context,pageNum,_){
+              switch (pageNum) {
+                case 0:
+                  return const AAOMainPanel();
+                case 1:
+                  return const StatisticShow();
+                case 2:
+                  return const ApplicationBoard();
+                case 3:
+                  return ProctoredExamPage();
+                case 4:
+                  return const ClassroomApplyPage();
+                case 5:
+                  return const FaultReportPage();
+                case 6:
+                  return const FaultReportPage();
+                default:
+                  return const AAOMainPanel();
+              }
+            }),)
+
         ],
       ),
     );
