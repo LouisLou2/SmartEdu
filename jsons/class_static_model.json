@@ -1,0 +1,242 @@
+{
+    "classes":{
+        "message":"success",
+    "code":200,
+    "data":{
+        "classes": [
+            {
+                "class_id": 88,
+                "class_name": "软件工程2201班",
+                "major_name": "软件工程",
+                "campus_name": "本部",
+                "start_year": 2022,
+                "conselor_id": "辅导员id",
+                "male_num": 92,
+                "female_num": 30
+            },
+            {
+                "class_id": 13,
+                "class_name": "软件工程2202班",
+                "major_name": "软件工程",
+                "campus_name": "校本部",
+                "start_year": 2023,
+                "conselor_id": "辅导员id_2",
+                "male_num": 58,
+                "female_num": 92
+            },
+            {
+                "class_id": 12,
+                "class_name": "软件工程2203班",
+                "major_name": "软件工程",
+                "campus_name": "新校区",
+                "start_year": 2020,
+                "conselor_id": "辅导员id_3",
+                "male_num": 55,
+                "female_num": 81
+            }
+        ],
+        "sum": 91
+    }
+    },
+    "campus_building":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "campus":[
+                {
+                    "campus_id": 1,
+                    "campus_name": "铁道校区",
+                    "building":[
+                        "教学楼1",
+                        "教学楼2",
+                        "教学楼3"
+                    ]
+                },
+                {
+                    "campus_id": 2,
+                    "campus_name": "校本部",
+                    "building":[
+                        "科教楼",
+                        "大操场",
+                        "教学楼3"
+                    ]
+                }
+            ]
+        }
+    },
+    "school_major":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "school_major_list":[
+                {
+                    "schoolId":1,
+                    "schoolName":"计算机学院",
+                    "majors":[
+                        {
+                            "majorId":1,
+                            "majorName":"软件工程"
+                        },
+                        {
+                            "majorId":2,
+                            "majorName":"计算机科学与技术"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "classrooms":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "classrooms": [
+              {
+                "classroom_id": 1,
+                "classroom_name": "A404",
+                "campus_name": "铁道校区",
+                "building": "世纪楼",
+                "status": 0,
+                "seat_num": 98,
+                "area": 100
+              }
+            ],
+            "sum": 100
+          }
+    },
+    "teachers":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "sum":100,
+            "teachers": [
+                {
+                    "teacherId": "45",
+                    "schoolName": "张三",
+                    "majorName": "院可新外",
+                    "teacherName": "术能府北图元",
+                    "title": "到一风式细和",
+                    "picUrl": "http://dummyimage.com/400x400"
+                },
+                {
+                    "teacherId": "43",
+                    "schoolName": "李四",
+                    "majorName": "效正华干气",
+                    "teacherName": "教元今面",
+                    "title": "记组门离才",
+                    "picUrl": "http://dummyimage.com/400x400"
+                },
+                {
+                    "teacherId": "83",
+                    "schoolName": "义毛比象音线",
+                    "majorName": "了都记律立后",
+                    "teacherName": "角斗准好该",
+                    "title": "题共在东",
+                    "picUrl": "http://dummyimage.com/400x400"
+                }
+            ]
+        }
+    },
+    "students":{
+        "code":200,
+        "message":"success",
+        "data":
+            {
+                "students": [
+                    {
+                        "pic_url": "http://dummyimage.com/400x400",
+                        "name": "罗嘉烨",
+                        "gender": true,
+                        "stu_id": "45",
+                        "phone_number": "61",
+                        "major_id": 12,
+                        "major_name": "不好说",
+                        "birthday": "1996-08-30",
+                        "address": "湖南省离岛屯门区",
+                        "school_id": 63,
+                        "school_name": "要门特共转造",
+                        "grade_level": 66,
+                        "indentity": "ea in amet consectetur"
+                    },
+                    {
+                        "pic_url": "http://dummyimage.com/400x400",
+                        "name": "李嘉烨",
+                        "gender": false,
+                        "stu_id": "92",
+                        "phone_number": "58",
+                        "major_id": 79,
+                        "major_name": "运主期是图想多",
+                        "birthday": "1985-06-28",
+                        "address": "香港特别行政区德宏傣族景颇族自治州太鲁阁",
+                        "school_id": 9,
+                        "school_name": "多气太拉复万",
+                        "grade_level": 81,
+                        "indentity": "nisi"
+                    },
+                    {
+                        "pic_url": "http://dummyimage.com/400x400",
+                        "name": "张嘉烨",
+                        "gender": true,
+                        "stu_id": "70",
+                        "phone_number": "11",
+                        "major_id": 58,
+                        "major_name": "热感花准",
+                        "birthday": "1994-05-08",
+                        "address": "重庆澎湖县隆回县",
+                        "school_id": 59,
+                        "school_name": "山应争身可知",
+                        "grade_level": 80,
+                        "indentity": "irure"
+                    }
+                ],
+                "sum": 59
+            }
+    },
+
+    "repairReport":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "reports": [
+                {
+                    "reportId": 11,
+                    "reportTime": "2024-12-1",
+                    "campusName": "铁道校区",
+                    "campusId": 4,
+                    "building": "世纪楼",
+                    "classroomId": 10,
+                    "classroomName": "A404",
+                    "faultDesc": "岁阿萨法",
+                    "status": 1,
+                    "maintFrom": "2024-12-3",
+                    "maintTo": "2024-12-5",
+                    "maintDetail": "不好说"
+                }
+            ],
+            "sum": 10
+        }
+      },
+
+    "applyList":{
+        "code":200,
+        "message":"success",
+        "data":{
+            "applications": [
+                {
+                    "reserveId":1,
+                    "teacherId":"asfsdagdsa",
+                    "year":333,
+                    "week":1,
+                    "className":"333",
+                    "dayOfWeek":2,
+                    "periodFrom":1,
+                    "periodTo":2,
+                    "reason":1,
+                    "reasonDetail":"我要借这个教室用来讨论",
+                    "actName":"教研活动"
+                }
+                
+            ],
+        "sum":1000    }
+    }
+}

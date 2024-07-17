@@ -4,18 +4,21 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
+import 'package:smart_edu/presentation/page/admin_page/aao_admin_dash.dart';
+import 'package:smart_edu/presentation/page/admin_page/aao_main_panel.dart';
+import 'package:smart_edu/presentation/page/admin_page/classroom_application_fun/application_board.dart';
+import 'package:smart_edu/presentation/page/admin_page/statistic_show_fun/statistic_show.dart';
 import 'package:smart_edu/presentation/page/main_panel.dart';
-import 'package:smart_edu/presentation/teacher_page/classroom_page/classroom_application.dart';
-import 'package:smart_edu/presentation/teacher_page/course_schedule_page/course_preview_card.dart';
-import 'package:smart_edu/presentation/teacher_page/course_schedule_page/course_schedule_preview.dart';
-import 'package:smart_edu/presentation/teacher_page/exam_arrange_page/exam_application_form.dart';
-import 'package:smart_edu/presentation/teacher_page/textbook_page/textbook_application.dart';
-import 'package:smart_edu/presentation/widget/course_card.dart';
-import 'package:smart_edu/presentation/widget/exam_list.dart';
+// import 'package:smart_edu/presentation/teacher_page/classroom_page/classroom_application.dart';
+import 'package:smart_edu/presentation/page/tea_page/classroom_apply_fun/classroom_apply_page.dart';
+import 'package:smart_edu/presentation/page/tea_page/proctored_exam_fun/proctored_exam_page.dart';
+
+import 'package:smart_edu/presentation/page/tea_page/fault_report_fun/fault_report_page.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({super.key, required this.subWidget});
+
   final Widget subWidget;
   @override
   State<MainDashboard> createState() => _MainDashboardState();
@@ -181,7 +184,7 @@ class _MainDashboardState extends State<MainDashboard> {
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: const CircleAvatar(
               child: Text(
-                '娄',
+                'Admin',
               ),
             ),
           ),
@@ -201,41 +204,36 @@ class _MainDashboardState extends State<MainDashboard> {
               setState(() {
                 switch (index) {
                   case 0:
-                    subWidget = CourseCard();
+                    subWidget = const AAOMainPanel();
                     break;
                   case 1:
-                    subWidget = MainPanel();
+                    subWidget = const StatisticShow();
                     break;
                   case 2:
-                    subWidget = CourseSchedulePreview();
+                    subWidget = const ApplicationBoard();
                     break;
                   case 3:
-                    subWidget = MainPanel();
+                    subWidget = ProctoredExamPage();
                     break;
                   case 4:
-                    subWidget = ExamApplicationForm();
+                    // subWidget = ExamApplicationForm();
                     break;
                   case 5:
-                    subWidget = ExamList();
+                    subWidget = ApplicationBoard();
                     break;
                   case 6:
-                    subWidget = ClassroomApplication();
+                    subWidget = ClassroomApplyPage();
                     break;
                   case 7:
-                    subWidget = TextbookApplication();
+                    subWidget = FaultReportPage();
                     break;
                 }
               });
             },
             destinations: [
               getNavRailEntry(Icons.home, '主页'),
-              getNavRailEntry(CupertinoIcons.profile_circled, '学籍'),
-              getNavRailEntry(Icons.book_outlined, '选课'),
-              getNavRailEntry(Icons.grade, '成绩'),
-              getNavRailEntry(Icons.stacked_line_chart, '培养管理'),
-              getNavRailEntry(CupertinoIcons.pencil_circle, '我的考试'),
-              getNavRailEntry(Icons.rate_review_outlined, '教学评价'),
-              getNavRailEntry(Icons.school_outlined, '毕业设计'),
+              getNavRailEntry(Icons.data_array, '统计'),
+              getNavRailEntry(Icons.check, '审核'),
             ],
           ),
           const VerticalDivider(

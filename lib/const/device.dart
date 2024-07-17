@@ -1,5 +1,5 @@
 import 'dart:ui';
 
-class DeviceDesignDraft{
+class DeviceDesignDraft {
   static const desktop = Size(1442, 822);
 }
