@@ -27,7 +27,7 @@ class ApplyDs {
   static Future<Result<ClassroomApplyResp>> getApplyList(
       ClassroomStaticsReq req) async {
     try {
-      Response response = await _baseDio.get(NetworkPathCollector.applyList,
+      Response response = await _baseDio.post(NetworkPathCollector.applyList,
           data: req.toJson(), options: NetworkConfig.json_json);
       Resp resp = Resp.fromJson(response.data);
       if (ResCode.isOk(resp.code)) {
@@ -42,7 +42,7 @@ class ApplyDs {
   static Future<Result<String>> applyClassroom(
       int reserveId,String detail,int result) async {
     try {
-      Response response = await _baseDio.get(NetworkPathCollector.applyList,
+      Response response = await _baseDio.post(NetworkPathCollector.applyClassroom,
           data: {
             "reserveId":reserveId,
             "detail":detail,

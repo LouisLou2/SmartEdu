@@ -47,9 +47,9 @@ class ClassroomApplyItem {
   }
 
   ClassroomApplyItem.fromJson(dynamic json) {
-    _reserveId = json['reserveId'];
+    _reserveId = json['reservationId'];
     _teacherId = json['teacherId'];
-    _className = json['className'];
+    _className = json['classroomName'];
     _year = json['year'];
     _week = json['week'];
     _dayOfWeek = json['dayOfWeek'];

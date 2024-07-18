@@ -16,19 +16,19 @@ class StudentStaticsItem {
   });
 
   StudentStaticsItem.fromJson(dynamic json) {
-    picUrl = json['pic_url'];
+    picUrl = json['picUrl'];
     name = json['name'];
     gender = json['gender'] ? "男" : "女";
-    stuId = json['stu_id'];
-    phoneNumber = json['phone_number'];
-    majorId = json['major_id'];
-    majorName = json['major_name'];
+    stuId = json['stuId'];
+    phoneNumber = json['phoneNumber'];
+    majorId = json['majorId'];
+    majorName = json['majorName'];
     birthday = json['birthday'];
     address = json['address'];
-    schoolId = json['school_id'];
-    schoolName = json['school_name'];
-    gradeLevel = json['grade_level'];
-    indentity = json['indentity'];
+    schoolId = json['schoolId'];
+    schoolName = json['schoolName'];
+    gradeLevel = json['gradeLevel'];
+    indentity = json['identity'];
   }
   String? picUrl;
   String? name;

@@ -134,7 +134,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                             ),
                           ),
                           Text(
-                            "卡洛琳",
+                            "管理员",
                             style: context.theme.textTheme.titleLarge?.copyWith(
                               letterSpacing: -0.5,
                               fontSize: 30.sp,
@@ -212,7 +212,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                           children: [
                             NumStatCard(
                               title: '学生总数',
-                              detailStr: '学生总数是很好的',
+                              detailStr: 'student numbers',
                               number: 1000,
                               color: context.theme.colorScheme.primary,
                               numFontSize: 30.sp,
@@ -222,7 +222,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                             ),
                             NumStatCard(
                               title: '老师总数',
-                              detailStr: '老师总数是很好的',
+                              detailStr: 'teacher numbers',
                               number: 100,
                               color: context.theme.colorScheme.primary,
                               contentPadding: EdgeInsets.symmetric(
@@ -232,7 +232,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                             ),
                             NumStatCard(
                               title: '课程总数',
-                              detailStr: '课程总数是很好的',
+                              detailStr: 'course numbers',
                               number: 100,
                               color: context.theme.colorScheme.primary,
                               contentPadding: EdgeInsets.symmetric(
@@ -242,7 +242,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                             ),
                             NumStatCard(
                               title: '教研组数',
-                              detailStr: '教研组数是很好的',
+                              detailStr: 'AAO numbers',
                               number: 10,
                               color: context.theme.colorScheme.primary,
                               contentPadding: EdgeInsets.symmetric(
@@ -398,7 +398,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                                           ),
                                         ),
                                         title: Text(
-                                          '卡洛琳',
+                                          '管理员',
                                           style: TextStyle(
                                             fontSize: 15.sp,
                                             color: context
@@ -639,7 +639,7 @@ class _AAOMainPanelState extends State<AAOMainPanel> {
                           height: 12.h,
                         ),
                         Text(
-                          '卡洛琳',
+                          '管理员',
                           style: context.theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.sp,

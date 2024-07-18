@@ -269,7 +269,7 @@ class _ClassesTableState extends State<ClassesTable> {
                       ),
                       ShadSelect<Tuple2<int, int>>(
                         placeholder: Text(
-                          '具体教室',
+                          '入学年份',
                           style: context.theme.textTheme.bodyMedium?.copyWith(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,

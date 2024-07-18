@@ -17,9 +17,9 @@ class ClassroomApplyResp {
   }
 
   ClassroomApplyResp.fromJson(dynamic json) {
-    if (json['applications'] != null) {
+    if (json['reservations'] != null) {
       _applications = [];
-      json['applications'].forEach((v) {
+      json['reservations'].forEach((v) {
         _applications?.add(ClassroomApplyItem.fromJson(v));
       });
     }

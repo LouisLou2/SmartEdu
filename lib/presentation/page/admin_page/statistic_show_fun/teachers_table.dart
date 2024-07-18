@@ -196,7 +196,7 @@ class _TeachersTableState extends State<TeachersTable> {
                         ),
                         //根据学院选择专业
                         Selector<StaticsProv, int>(
-                          selector: (context, prov) => prov.selectedSchool,
+                          selector: (context, prov) => prov.selectedSchoolInd,
                           shouldRebuild: (pre, next) => pre != next,
                           builder: (context, selectId, child) {
                             return ShadSelect<Tuple2<int, int>>(

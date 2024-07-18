@@ -23,7 +23,7 @@ class StatisticDs {
   static Future<Result<ClassStaticsResp>> getClassStaticsInfo(
       ClassStaticsReq req) async {
     try {
-      Response response = await _baseDio.get(NetworkPathCollector.classStatics,
+      Response response = await _baseDio.post(NetworkPathCollector.classStatics,
           data: req.toJson(), options: NetworkConfig.json_json);
       Resp resp = Resp.fromJson(response.data);
       if (ResCode.isOk(resp.code)) {
@@ -71,7 +71,7 @@ class StatisticDs {
 
   static Future<Result<StuSearchResp>> getStuSearchReq(StuSearchReq req) async {
     try {
-      Response response = await _baseDio.get(
+      Response response = await _baseDio.post(
         NetworkPathCollector.student,
         data: req.toJson(),
         options: NetworkConfig.json_json,

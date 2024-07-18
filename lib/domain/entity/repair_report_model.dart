@@ -16,9 +16,10 @@ class Report {
 
   Report.fromJson(dynamic json) {
     reportId = json['reportId'];
-    reportTime = json['reportTime'];
+    reportTime = DateTime.parse(json['reportTime']);
     campusName = json['campusName'];
     campusId = json['campusId'];
+
     building = json['building'];
     classroomId = json['classroomId'];
     classroomName = json['classroomName'];
@@ -26,7 +27,7 @@ class Report {
     status = json['status']==0?"已维修":"未维修";
   }
   num? reportId;
-  String? reportTime;
+  DateTime? reportTime;
   String? campusName;
   num? campusId;
   String? building;
@@ -35,8 +36,8 @@ class Report {
   String? faultDesc;
   String? status;
   num? get reportIdValue => reportId;
-  String? get reportTimeValue => reportTime;
   String? get campusNameValue => campusName;
+  DateTime get reportTimeValue=> reportTime!;
   num? get campusIdValue => campusId;
   String? get buildingValue => building;
   num? get classroomIdValue => classroomId;

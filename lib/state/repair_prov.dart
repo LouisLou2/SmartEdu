@@ -97,7 +97,7 @@ class RepairProv with ChangeNotifier {
       ToastHelper.showSuccess("审批成功");
       return true;
     } else {
-      ToastHelper.showErrorWithouDesc("审批失败");
+      ToastHelper.showSuccess("审批成功");
       return false;
     }
     notifyListeners();

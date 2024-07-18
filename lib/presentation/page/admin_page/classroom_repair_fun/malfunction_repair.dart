@@ -113,12 +113,14 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
       },
     )
   ];
-
+  String getProperReportTime(DateTime time) {
+    return '${time.year}-${time.month}-${time.day} ${time.hour}点';
+  }
   List<PlutoRow> getRowFromReports(List<Report> reports) {
     List<PlutoRow> plutoRows = reports.map((report) {
       return PlutoRow(cells: {
         'report_id': PlutoCell(value: report.reportId.toString()),
-        'report_time': PlutoCell(value: report.reportTime),
+        'report_time': PlutoCell(value: getProperReportTime(report.reportTimeValue)),
         'campus_name': PlutoCell(value: report.campusName),
         'campus_id': PlutoCell(value: report.campusId.toString()),
         'building': PlutoCell(value: report.building),

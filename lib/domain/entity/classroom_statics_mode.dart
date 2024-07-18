@@ -17,7 +17,7 @@ class ClassroomStaticItem {
     classroomName = json['classroomName'];
     campusName = json['campusName'];
     building = json['building'];
-    status = json['status'];
+    // status = json['status'];
     seatNum = json['seatNum'];
     area = json['area'];
 

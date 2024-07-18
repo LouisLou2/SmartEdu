@@ -186,7 +186,7 @@ class _MainDashboardState extends State<MainDashboard> {
             padding: EdgeInsets.symmetric(horizontal: 15.w),
             child: const CircleAvatar(
               child: Text(
-                'Admin',
+                '管',
               ),
             ),
           ),

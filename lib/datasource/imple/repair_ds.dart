@@ -25,7 +25,7 @@ class RepairDs {
   static Future<Result<RepairReportResp>> getRepairReports(
       RepairReportReq req) async {
     try {
-      Response response = await _baseDio.get(NetworkPathCollector.repairReport,
+      Response response = await _baseDio.post(NetworkPathCollector.repairReport,
           data: req.toJson(), options: NetworkConfig.json_json);
       Resp resp = Resp.fromJson(response.data);
       if (ResCode.isOk(resp.code)) {

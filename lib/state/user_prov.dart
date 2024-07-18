@@ -16,7 +16,7 @@ class UserProv extends ChangeNotifier {
       // Resp resp = Resp.fromJson(response.data);
       // print(resp.data.token);
       // token = resp.data.token;
-      token ="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUR1QtNC0tRHhUZndBajk2UVplRjRqcVZpN0djNUVZOTJldUdZc1FrYzlHQ1Q4RDFOeWc1b3QzZWhZYTAwQ1R6Vi04aTBCcUQwLWlaMGpsMmNuNGo5dWQ5NnJiYmQ0cXBaIiwiZXhwIjoxNzIxMjc1Mzc3LCJpYXQiOjE3MjEyNjgxNzd9.0-sKlsSYCaYPpY6r9J1ayQlpThCgokDZPq75LrXM4-w";
+      token ="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUR1QtMi1hY1ZaT3RZeVh4OWdzZXhhR2I2RXNnS0NnVHZaMy14WERsLVpkR3o3MFRjclI5dnBCUG10bmYxT3QtdWNXN2sxLVIwLWlaMGpsMmNuNGo5dWQ5NnJiYmQ0cXBaIiwiZXhwIjoxNzIxMzA0MjgwLCJpYXQiOjE3MjEyOTcwODB9.u6BQK9wSREqCikKojqtTSsyeDdhYk3W1er5i3nOW7uY";
     } catch (e) {
       print(e);
     }

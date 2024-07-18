@@ -47,10 +47,12 @@ class _ClassroomListState extends State<ClassroomList> {
   final ApplyProv applyProv = ProvManager.applyProv;
   final TextEditingController textEditingController = TextEditingController();
   final NumberPaginatorController controller = NumberPaginatorController();
-  ShadPopoverController popoverController = ShadPopoverController();
 
   List<PlutoRow> getRowsFromClassroomApply(
       List<ClassroomApplyItem> classroomApply) {
+    ShadPopoverController popoverController1 = ShadPopoverController();
+    ShadPopoverController popoverController2 = ShadPopoverController();
+
     return classroomApply
         .map((e) => PlutoRow(cells: {
               'reserveId': PlutoCell(value: e.reserveId),
@@ -62,12 +64,12 @@ class _ClassroomListState extends State<ClassroomList> {
                       dayOfWeek: e.dayOfWeek,
                       periodFrom: e.periodFrom,
                       periodTo: e.periodTo)),
-              'reason': PlutoCell(value: e.reason),
+              'reason': PlutoCell(value: e.reason==0?'教学活动':'科研活动'),
               'class_name': PlutoCell(value: e.className),
               'actName': PlutoCell(value: e.actName),
               'reasonDetail': PlutoCell(
                   value: ShadPopover(
-                controller: popoverController,
+                controller: e.reserveId==1?popoverController1:popoverController2,
                 popover: (context) {
                   return Padding(
                     padding: EdgeInsets.all(10.r),
@@ -77,7 +79,7 @@ class _ClassroomListState extends State<ClassroomList> {
                 child: ShadButton(
                   text: Text("详情"),
                   onPressed: () {
-                    popoverController.toggle();
+                    popoverController1.toggle();
                   },
                 ),
               )),

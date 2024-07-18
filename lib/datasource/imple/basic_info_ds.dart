@@ -17,6 +17,7 @@ class BaseInfoDs {
     try{
       Response response = await _baseDio.get(
         NetworkPathCollector.baseInfo,
+        // "http://localhost:3000/baseInfos",
         options: NetworkConfig.json_json,
       );
       Resp res = Resp.fromJson(response.data);

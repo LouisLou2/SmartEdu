@@ -7,9 +7,9 @@ class RepairReportResp {
   });
 
   RepairReportResp.fromJson(dynamic json) {
-    if (json['reports'] != null) {
+    if (json['records'] != null) {
       reports = [];
-      json['reports'].forEach((v) {
+      json['records'].forEach((v) {
         reports?.add(Report.fromJson(v));
       });
     }

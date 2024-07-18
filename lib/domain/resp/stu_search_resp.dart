@@ -7,9 +7,9 @@ class StuSearchResp {
   });
 
   StuSearchResp.fromJson(dynamic json) {
-    if (json['students'] != null) {
+    if (json['studentDetailInfoVOList'] != null) {
       students = [];
-      json['students'].forEach((v) {
+      json['studentDetailInfoVOList'].forEach((v) {
         students?.add(StudentStaticsItem.fromJson(v));
       });
     }

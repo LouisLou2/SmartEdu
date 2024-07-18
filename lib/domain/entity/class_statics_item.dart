@@ -11,14 +11,14 @@ class ClassStaticsItem {
   });
 
   ClassStaticsItem.fromJson(dynamic json) {
-    classId = json['class_id'];
-    className = json['class_name'];
-    majorName = json['major_name'];
-    campusName = json['campus_name'];
-    startYear = json['start_year'];
-    conselorId = json['conselor_id'];
-    maleNum = json['male_num'];
-    femaleNum = json['female_num'];
+    classId = json['classId'];
+    className = json['className'];
+    majorName = json['majorName'];
+    campusName = json['campusName'];
+    startYear = json['startYear'];
+    conselorId = json['counselorId'];
+    maleNum = json['maleNum'];
+    femaleNum = json['femaleNum'];
   }
   num? classId;
   String? className;
