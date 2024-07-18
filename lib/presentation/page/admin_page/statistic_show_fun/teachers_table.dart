@@ -177,7 +177,7 @@ class _TeachersTableState extends State<TeachersTable> {
                                 context,
                               ),
                               onChanged: (value) {
-                                sp.setReqSchool(value.item2 - 1);
+                                sp.setTeacherReqSchool(value.item2 - 1);
                               },
                               selectedOptionBuilder: (BuildContext context,
                                   Tuple2<int, int> value) {
@@ -217,7 +217,7 @@ class _TeachersTableState extends State<TeachersTable> {
                                 context,
                               ),
                               onChanged: (value) {
-                                print('@@@@@@@@@@@@@@$value');
+                                sp.setTeacherReqMajor(value.item2 - 1);
                               },
                               selectedOptionBuilder: (BuildContext context,
                                   Tuple2<int, int> value) {

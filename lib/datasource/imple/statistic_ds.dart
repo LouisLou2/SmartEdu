@@ -54,7 +54,7 @@ class StatisticDs {
 
   static Future<Result<TeaSearchResp>> getTeaSearchReq(TeaSearchReq req) async {
     try {
-      Response response = await _baseDio.get(
+      Response response = await _baseDio.post(
         NetworkPathCollector.teachers,
         data: req.toJson(),
         options: NetworkConfig.json_json,

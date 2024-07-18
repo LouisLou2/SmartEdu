@@ -315,6 +315,7 @@ class _MalfunctionRepairState extends State<MalfunctionRepair> {
                               ),
                               onChanged: (value) {
                                 print('@@@@@@@@@@@@@@$value');
+                                repairProv.setReqBuilding(value.item2 - 1);
                               },
                               selectedOptionBuilder: (BuildContext context,
                                   Tuple2<int, int> value) {

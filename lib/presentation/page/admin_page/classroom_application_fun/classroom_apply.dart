@@ -351,6 +351,7 @@ class _ClassroomListState extends State<ClassroomList> {
                             ),
                             onChanged: (value) {
                               print('@@@@@@@@@@@@@@$value');
+                              applyProv.setReqBuilding(value.item2 - 1);
                             },
                             selectedOptionBuilder:
                                 (BuildContext context, Tuple2<int, int> value) {

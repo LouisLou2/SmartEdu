@@ -12,15 +12,16 @@ class NetworkPathCollector {
   static const info = "/info";
   static const school_major = "/school_major";
   static const campus_building = "/campus_building";
-  static const teachers = "/teachers";
+  // static const teachers = "/teachers";
   static const student = "/students";
   // static const repairReport = "/ac/api/fault_report";
   static const repairReport = "/repairReport";
 
+  static const teachers ="/ts/TeacherInfo/teacherInfo";
   // static const applyList = "/ac/api/classroomReservations";
   static const applyList = "/applyList";
-  // static const baseInfo = "/tr/files/basicInfo";// url ok
-static const baseInfo = "/baseInfos";// url ok
+  static const baseInfo = "/tr/files/basicInfo";// url ok
+// static const baseInfo = "/baseInfos";// url ok
 
 static const carryOutRepair = "/fault_carry_out";
 static const applyClassroom = "/apply_classroom";

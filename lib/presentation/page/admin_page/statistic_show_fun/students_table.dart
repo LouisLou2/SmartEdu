@@ -298,7 +298,7 @@ class _StudentsTableState extends State<StudentsTable> {
                               context,
                             ),
                             onChanged: (value) {
-                              print('@@@@@@@@@@@@@@$value');
+                              studentSearchProv.setReqMajor(value.item2 - 1);
                             },
                             selectedOptionBuilder:
                                 (BuildContext context, Tuple2<int, int> value) {
@@ -316,32 +316,7 @@ class _StudentsTableState extends State<StudentsTable> {
                           );
                         },
                       ),
-                      ShadSelect<Tuple2<int, int>>(
-                        placeholder: Text(
-                          '专业',
-                          style: context.theme.textTheme.bodyMedium?.copyWith(
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        options: getTextList(
-                          [optionSection],
-                          context,
-                        ),
-                        onChanged: (value) {
-                          print('@@@@@@@@@@@@@@$value');
-                        },
-                        selectedOptionBuilder:
-                            (BuildContext context, Tuple2<int, int> value) {
-                          return Text(
-                            optionSection.options[value.item2],
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          );
-                        },
-                      ),
+
                       ShadSelect<Tuple2<int, int>>(
                         placeholder: Text(
                           '开课时间',

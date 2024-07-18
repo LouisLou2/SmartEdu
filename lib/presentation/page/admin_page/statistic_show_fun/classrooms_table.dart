@@ -209,6 +209,7 @@ class _ClassroomsTableState extends State<ClassroomsTable> {
                               ),
                               onChanged: (value) {
                                 print('@@@@@@@@@@@@@@$value');
+                                sp.setReqBuilding(value.item2 - 1);
                               },
                               selectedOptionBuilder: (BuildContext context,
                                   Tuple2<int, int> value) {

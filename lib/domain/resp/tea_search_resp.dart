@@ -8,7 +8,7 @@ class TeaSearchResp {
 
   TeaSearchResp.fromJson(Map<String, dynamic> json)
       : sum = json['sum'],
-        teachers = (json['teachers'] as List)
+        teachers = (json['teacherDetailVOList'] as List)
             .map((e) => TeacherStaticsItem.fromJson(e))
             .toList();
 }

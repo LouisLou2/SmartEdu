@@ -249,6 +249,7 @@ class _ClassesTableState extends State<ClassesTable> {
                             ),
                             onChanged: (value) {
                               print('@@@@@@@@@@@@@@$value');
+                              sp.setReqMajor(value.item2 - 1);
                             },
                             selectedOptionBuilder:
                                 (BuildContext context, Tuple2<int, int> value) {

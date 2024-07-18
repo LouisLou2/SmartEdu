@@ -210,9 +210,6 @@ class _MainDashboardState extends State<MainDashboard> {
               getNavRailEntry(Icons.home, '主页'),
               getNavRailEntry(Icons.data_array, '统计'),
               getNavRailEntry(Icons.check, '审核'),
-              getNavRailEntry(Icons.check, '监考'),
-              getNavRailEntry(Icons.check, '教室申请'),
-              getNavRailEntry(Icons.check, '报修'),
             ],
           ),
           const VerticalDivider(
