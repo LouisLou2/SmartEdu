@@ -3,8 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/entity/tuple2.dart';
 import 'package:smart_edu/extension/context_extension.dart';
-
-import '../../entity/option_section.dart';
+import '../../entity/general/option_section.dart';
 import '../../style/style_scheme.dart';
 
 List<Widget> getTextList(List<OptionSection> list, BuildContext context,) {

@@ -5,7 +5,7 @@ import 'package:smart_edu/entity/ui_tool/sidebar_data.dart';
 import 'package:smart_edu/entity/ui_tool/sub_bar_tile.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/widget/const_widgets/custom_searchbar.dart';
-import 'package:smart_edu/state/sidebar_prov.dart';
+import 'package:smart_edu/state/prov/sidebar_prov.dart';
 
 import '../../entity/ui_tool/bar_tile.dart';
 import '../../style/style_scheme.dart';

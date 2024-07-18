@@ -2,17 +2,23 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/entity/chart_data.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/widget/activity_tile.dart';
 import 'package:smart_edu/presentation/widget/card_header.dart';
+import 'package:smart_edu/presentation/widget/custom_line_chart.dart';
 import 'package:smart_edu/presentation/widget/legend.dart';
+import 'package:smart_edu/state/prov/attend_prov.dart';
 import 'package:smart_edu/style/style_scheme.dart';
 import 'package:smart_edu/util/format_util.dart';
 import 'package:time_planner/time_planner.dart';
 
+import '../../const/data_status.dart';
 import '../../entity/activity.dart';
+import '../../state/prov_manager.dart';
+import 'error_page.dart';
 
 class MainPanel extends StatefulWidget{
   const MainPanel({super.key});
@@ -22,6 +28,8 @@ class MainPanel extends StatefulWidget{
 }
 
 class _MainPanelState extends State<MainPanel> {
+  final uProv = ProvManager.userProv;
+  final atProv = ProvManager.attendProv;
 
   List<Color> creditColor=[Colors.green, Colors.blue, Colors.orange, Colors.red];
   List<Activity> activities = [
@@ -37,6 +45,14 @@ class _MainPanelState extends State<MainPanel> {
     xList: [2,3,4,5,6],
     yList: [0.9, 0.7, 0.85, 0.5, 0.8],
   );
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      atProv.fetchAttendList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +85,7 @@ class _MainPanelState extends State<MainPanel> {
                         ),
                       ),
                       Text(
-                        "李华",
+                        uProv.student!.name,
                         style: context.theme.textTheme.titleLarge?.copyWith(
                           letterSpacing: -0.5,
                           fontWeight: FontWeight.w700,
@@ -216,7 +232,33 @@ class _MainPanelState extends State<MainPanel> {
                               titleFontWeight: FontWeight.w500,
                             ),
                             SizedBox(height: 10.h,),
-                            getChart(cdata),
+                            Selector<AttendProv,DataStatus>(
+                              selector: (_, prov) => prov.status,
+                              shouldRebuild: (prev, next) => prev != next,
+                              builder: (_,status,__){
+                                switch(status){
+                                  case DataStatus.initial:
+                                    return const Center(child: CircularProgressIndicator(),);
+                                  case DataStatus.loading:
+                                    return const Center(child: CircularProgressIndicator(),);
+                                  case DataStatus.success:
+                                    return CustomLineChart(
+                                      aspectRatio: 1.75,
+                                      data: atProv.attendList,
+                                    );
+                                  case DataStatus.failure:
+                                  return IconButton(
+                                    icon: Icon(
+                                      Icons.error,
+                                      color: context.theme.colorScheme.error,
+                                    ),
+                                    onPressed: (){
+                                      atProv.fetchAttendList();
+                                    },
+                                  );
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -267,8 +309,8 @@ class _MainPanelState extends State<MainPanel> {
                           color: context.theme.colorScheme.primary,
                           width: 2.sp,
                         ),
-                        image:  const DecorationImage(
-                          image: AssetImage('assets/image/stu.png'),
+                        image:  DecorationImage(
+                          image: NetworkImage(uProv.student!.picUrl),
                           fit: BoxFit.cover,
                         ),
                         boxShadow: [
@@ -287,7 +329,7 @@ class _MainPanelState extends State<MainPanel> {
                     SizedBox(height: 12.h,),
                     Align(
                       child: Text(
-                        '李华',
+                        uProv.student!.name,
                         style: context.theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.sp,
@@ -295,7 +337,7 @@ class _MainPanelState extends State<MainPanel> {
                       ),
                     ),
                     Text(
-                      '2022 软件工程',
+                      '${uProv.student!.startYear} ${uProv.student!.majorName}',
                       style: TextStyle(
                         fontSize: 15.sp,
                         color: Colors.grey,
@@ -473,7 +515,7 @@ class _MainPanelState extends State<MainPanel> {
     return TimePlanner(
       startHour: 8,
       endHour: 22,
-      headers: [
+      headers: const [
         TimePlannerTitle(title: 'Mon'),
         TimePlannerTitle(title: 'Tue'),
         TimePlannerTitle(title: 'Wed'),
@@ -499,134 +541,6 @@ class _MainPanelState extends State<MainPanel> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget getChart(ChartData data){
-    return AspectRatio(
-      aspectRatio: 1.75,
-      child: LineChart(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeInOut,
-        LineChartData(
-          borderData: FlBorderData(
-            show: true,
-            border: Border(
-              bottom: BorderSide(
-                color: context.theme.colorScheme.primary.withOpacity(0.3),
-                width: 1.sp,
-              ),
-              left: BorderSide(
-                color: context.theme.colorScheme.primary.withOpacity(0.3),
-                width: 1.sp,
-              ),
-              right: BorderSide.none,
-              top: BorderSide.none,
-            ),
-          ),
-          lineBarsData: [
-            LineChartBarData(
-              barWidth: 6.sp,
-              spots: List.generate(data.xList.length, (index)=>FlSpot(data.xList[index].toDouble(), data.yList[index],),),
-              gradient: const LinearGradient(
-                colors: [Colors.indigoAccent, Colors.blue, Colors.green],
-              ),
-              isCurved: true,
-              isStrokeCapRound: true,
-              isStrokeJoinRound: true,
-              preventCurveOverShooting: true,
-              shadow: Shadow(
-                color: context.theme.colorScheme.primary.withOpacity(0.3),
-                blurRadius: 5,
-              ),
-            ),
-          ],
-          lineTouchData: LineTouchData(
-            touchTooltipData: LineTouchTooltipData(
-              getTooltipColor: (LineBarSpot touchedSpot){
-                return context.theme.colorScheme.primary;
-              },
-              getTooltipItems: (List<LineBarSpot> touchedSpots){
-                return touchedSpots.map((LineBarSpot touchedSpot){
-                  return LineTooltipItem(
-                    FormatUtil.doubleToStr(touchedSpot.y),
-                    TextStyle(
-                      color: context.theme.colorScheme.onPrimary,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StyleScheme.engFontFamily,
-                      fontSize: 12.sp,
-                    ),
-                  );
-                }).toList();
-              },
-            ),
-          ),
-          gridData: FlGridData(
-            show: true,
-            drawHorizontalLine: true,
-            drawVerticalLine: true,
-            horizontalInterval: 0.1,
-            verticalInterval: 1,
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: context.theme.colorScheme.primary.withOpacity(0.3),
-              strokeWidth: 1.sp,
-            ),
-            getDrawingVerticalLine: (value) => FlLine(
-              color: context.theme.colorScheme.primary.withOpacity(0.3),
-              strokeWidth: 1.sp,
-            ),
-          ),
-          titlesData: FlTitlesData(
-            rightTitles: const AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: false,
-              ),
-            ),
-            topTitles: const AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: false,
-              ),
-            ),
-            leftTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 0.1,
-                getTitlesWidget: (value, meta){
-                  return Text(
-                    FormatUtil.doubleToStr(value),
-                    style: TextStyle(
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: StyleScheme.engFontFamily,
-                      color: context.theme.colorScheme.onSurface.withOpacity(0.6),
-                    ),
-                  );
-                },
-              ),
-            ),
-            bottomTitles: AxisTitles(
-              sideTitles: SideTitles(
-                showTitles: true,
-                interval: 1,
-                getTitlesWidget: (value,meta){
-                  return Padding(
-                    padding: EdgeInsets.only(top: 1.h),
-                    child: Text(
-                      'Jan',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: StyleScheme.engFontFamily,
-                        color: context.theme.colorScheme.onSurface.withOpacity(0.6),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          )
-        ),
-      ),
     );
   }
 }

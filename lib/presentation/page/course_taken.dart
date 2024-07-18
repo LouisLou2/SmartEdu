@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:smart_edu/datasource/imple/self_info_ds.dart';
 import 'package:smart_edu/entity/chapter1.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/style/style_scheme.dart';
@@ -30,6 +31,9 @@ class _CourseTakenState extends State<CourseTaken> with TickerProviderStateMixin
       length: 3,
       vsync: this,
     );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      SelfInfoDs.getCourseSelection();
+    });
   }
 
   @override
@@ -38,146 +42,7 @@ class _CourseTakenState extends State<CourseTaken> with TickerProviderStateMixin
     final mtheme= context.theme;
     return Scaffold(
       backgroundColor: mtheme.colorScheme.surfaceContainerHighest,
-      appBar: AppBar(
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: 200.w,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Padding(
-          padding: EdgeInsets.only(top: 5.h),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(width: 15.w,),
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                ),
-                onPressed: ()=>Navigator.pop(context),
-              ),
-              Image.asset(
-                'assets/image/flutter_icon.png',
-                fit: BoxFit.cover,
-                width: 19.sp,
-              ),
-              SizedBox(width: 10.w,),
-              Text(
-                'CSU Academy',
-                style: context.theme.textTheme.titleLarge?.copyWith(
-                  letterSpacing: -0.5,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: StyleScheme.engFontFamily,
-                  fontSize: 20.sp,
-                ),
-              ),
-              SizedBox(width: 10.w,),
-              ShadButton.link(
-                text: Text(
-                  'CSU Main',
-                  style: TextStyle(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: StyleScheme.engFontFamily,
-                  ),
-                ),
-              ),
-              ShadButton.link(
-                text: Text(
-                  'Open Courses',
-                  style: TextStyle(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: StyleScheme.engFontFamily,
-                  ),
-                ),
-              ),
-              ShadButton.link(
-                text: Text(
-                  'Resources',
-                  style: TextStyle(
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: StyleScheme.engFontFamily,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: 300.w,
-              maxHeight: 40.h,
-            ),
-            child:  SearchBar(
-              leading: Icon(
-                Icons.search,
-                color: context.colorScheme.onSurfaceVariant.withOpacity(0.5),
-              ),
-              hintText: 'Search',
-              hintStyle: WidgetStatePropertyAll<TextStyle>(
-                context.textTheme.titleMedium!.copyWith(
-                  color: context.colorScheme.onSurfaceVariant.withOpacity(0.5),
-                  fontFamily: StyleScheme.engFontFamily,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              elevation: const WidgetStatePropertyAll<double>(0),
-              backgroundColor: WidgetStatePropertyAll<Color>(context.colorScheme.secondary.withOpacity(0.1)),
-              shape: const WidgetStatePropertyAll<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(width: 20.w,),
-          ShadButton.link(
-            text: Text(
-              'My Courses',
-              style: TextStyle(
-                fontSize: 17.sp,
-                fontWeight: FontWeight.w400,
-                fontFamily: StyleScheme.engFontFamily,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(
-              LucideIcons.calendar,
-              size: 25.sp,
-            ),
-            onPressed: (){},
-          ),
-          IconButton(
-            icon: Icon(
-              LucideIcons.bellRing,
-              size: 25.sp,
-            ),
-            onPressed: (){},
-          ),
-          SizedBox(width: 20.w,),
-          CircleAvatar(
-            radius: 20.sp,
-            child: const Text(
-              '娄',
-            ),
-          ),
-          SizedBox(width: 18.w,),
-        ],
-        backgroundColor: mtheme.colorScheme.surfaceContainerHighest,
-        // only bottom border
-        shape: Border(
-          bottom: BorderSide(
-            color: mtheme.colorScheme.outlineVariant,
-            width: 0.5,
-          ),
-        ),
-      ),
+      appBar: null,
       body: Row(
         children: [
           Expanded(

@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:smart_edu/extension/context_extension.dart';
+import 'package:smart_edu/state/prov/user_prov.dart';
 
+import '../../const/data_status.dart';
 import '../../state/prov_manager.dart';
 import '../../style/style_scheme.dart';
 import '../widget/leading_title.dart';
@@ -20,6 +22,7 @@ class MyProfile extends StatefulWidget{
 class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
 
   late final TabController _tabController;
+  final uProv = ProvManager.userProv;
 
   @override
   void initState() {
@@ -28,6 +31,11 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
       length: 4,
       vsync: this,
     );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if(uProv.status==DataStatus.failure){
+        uProv.fetchStudent();
+      }
+    });
   }
 
   @override
@@ -36,6 +44,10 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
     super.dispose();
   }
 
+  /*
+  为什么这里的build方法不需要使用Selector来监视UserState?
+  因为在main_dashboard.dart中已经在监视了，如果userStatus不对，就不会有这个界面的展示！
+  * */
   @override
   Widget build(BuildContext context) {
     final stheme= ShadTheme.of(context);
@@ -79,7 +91,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                               padding: EdgeInsets.all(3.sp),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              //Navigator.of(context).pop();
                             },
                           ),
                         ),
@@ -108,7 +120,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: NetworkImage('https://www.spencerclarkegroup.co.uk/uploads/5005001.png'),
+                                      image: NetworkImage(uProv.student!.picUrl),
                                       fit: BoxFit.cover,
                                     ),
                                     border: Border.all(
@@ -125,7 +137,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                             ),
                             SizedBox(height: 15.h,),
                             Text(
-                              'Caroline Polachek',
+                              uProv.student!.name,
                               style: TextStyle(
                                 fontSize: 27.sp,
                                 fontWeight: FontWeight.w700,
@@ -134,7 +146,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                               ),
                             ),
                             Text(
-                              '软奖工程',
+                              uProv.student!.majorName,
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 color: context.theme.colorScheme.secondary,
@@ -180,7 +192,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                                   ],
                                 ),
                                 Text(
-                                  'schoolName',
+                                  uProv.student!.schoolName,
                                   style: context.theme.textTheme.titleMedium?.copyWith(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
@@ -210,7 +222,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                                   ],
                                 ),
                                 Text(
-                                  'MajorName',
+                                  uProv.student!.majorName,
                                   style: StyleScheme.cn_onSuf_500_LPN03(
                                     size: 15.sp,
                                   ),
@@ -235,7 +247,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                                   ],
                                 ),
                                 Text(
-                                  'gradeLevel',
+                                  uProv.student!.gradeLevelStr,
                                   style: context.theme.textTheme.titleMedium?.copyWith(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
@@ -262,7 +274,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                                   ],
                                 ),
                                 Text(
-                                  '145678902',
+                                  uProv.student!.phoneNumber,
                                   style: context.theme.textTheme.titleMedium?.copyWith(
                                     fontSize: 15.sp,
                                     fontWeight: FontWeight.w500,
@@ -280,7 +292,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                             ),
                             SizedBox(height: 10.h,),
                             Text(
-                              'Somewhere on this planet',
+                              uProv.student!.address,
                               style: context.theme.textTheme.titleMedium?.copyWith(
                                 fontSize: 15.sp,
                                 color: context.theme.colorScheme.secondary,
@@ -297,7 +309,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                             ),
                             SizedBox(height: 10.h,),
                             Text(
-                              '564652387948954',
+                              uProv.student!.identity,
                               style: context.theme.textTheme.titleMedium?.copyWith(
                                 fontSize: 15.sp,
                                 color: context.theme.colorScheme.secondary,
@@ -314,7 +326,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin{
                 ),
               ),
             ),
-            Expanded(
+            const Expanded(
               flex: 15,
               child: Center(),
             ),

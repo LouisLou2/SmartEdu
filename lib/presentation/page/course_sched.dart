@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:smart_edu/entity/option_section.dart';
 import 'package:smart_edu/entity/tuple2.dart';
 import 'package:smart_edu/extension/context_extension.dart';
 import 'package:smart_edu/presentation/widget/text_list.dart';
+import 'package:smart_edu/state/prov/course_sched_prov.dart';
+import 'package:smart_edu/state/prov_manager.dart';
 import 'package:time_planner/time_planner.dart';
 
+import '../../const/business_const.dart';
+import '../../data/basic_data.dart';
+import '../../entity/general/option_section.dart';
 import '../../entity/term.dart';
 import '../../style/style_scheme.dart';
 
@@ -19,29 +24,37 @@ class CourseSched extends StatefulWidget{
 }
 
 class _CourseSchedState extends State<CourseSched>{
-
+  final CourseSchedProv coProv = ProvManager.courseSchedProv;
   late List<Term> termList;
-
-  late OptionSection optionSection;
+  late OptionSection YtOptions;
+  late OptionSection WOptions;
 
   @override
   void initState(){
-    termList = [
-      Term(year: 2020, term: false, weekNum: 16),
-      Term(year: 2020, term: true, weekNum: 16),
-      Term(year: 2021, term: false, weekNum: 16),
-      Term(year: 2021, term: true, weekNum: 16),
-      Term(year: 2022, term: false, weekNum: 16),
-      Term(year: 2022, term: true, weekNum: 16),
-      Term(year: 2023, term: false, weekNum: 16),
-      Term(year: 2023, term: true, weekNum: 16),
-      Term(year: 2024, term: false, weekNum: 16),
-      Term(year: 2024, term: true, weekNum: 16),
-      Term(year: 2025, term: false, weekNum: 16),
-      Term(year: 2025, term: true, weekNum: 16),
-    ];
-    optionSection = OptionSection.fromTerm(termList);
+    setYearTermSection();
+    YtOptions = OptionSection.fromTerm(termList);
+    WOptions = OptionSection.fromWeek(BusinessConst.weeksPerTerm);
     super.initState();
+    // 在initState中加载数据
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      coProv.fetchTasks(isDefault: true);
+    });
+  }
+
+  void setYearTermSection(){
+    int yearFrom = BasicData.earliestTermYear;
+    int yearTo = BasicData.nowYear;
+    termList = [];
+    for(int i = yearTo;i>=yearFrom;--i){
+      termList.add(Term(year: i, term: true,));
+      termList.add(Term(year: i, term: false,));
+    }
+  }
+
+  Tuple2<int,bool> getYearTerm(int index){
+    int year = termList[index].year;
+    bool term = termList[index].term;
+    return Tuple2<int,bool>(year,term);
   }
 
   @override
@@ -208,13 +221,16 @@ class _CourseSchedState extends State<CourseSched>{
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        options: getTextList([optionSection], context,),
+                        initialValue: Tuple2<int,int>(0,0),
+                        options: getTextList([YtOptions], context,),
                         onChanged: (value) {
                           print('@@@@@@@@@@@@@@$value');
+                          final yt = getYearTerm(value.item2);
+                          coProv.setYearTerm(yt.item1,yt.item2);
                         },
                         selectedOptionBuilder: (BuildContext context, Tuple2<int, int> value) {
                           return Text(
-                            optionSection.options[value.item2],
+                            YtOptions.options[value.item2],
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
@@ -230,13 +246,15 @@ class _CourseSchedState extends State<CourseSched>{
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        options: getTextList([optionSection], context,),
+                        initialValue: Tuple2<int,int>(0,0),
+                        options: getTextList([WOptions], context,),
                         onChanged: (value) {
                           print('@@@@@@@@@@@@@@$value');
+                          coProv.setWeek(value.item2+1);// 从1开始
                         },
                         selectedOptionBuilder: (BuildContext context, Tuple2<int, int> value) {
                           return Text(
-                            optionSection.options[value.item2],
+                            WOptions.options[value.item2],
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
@@ -244,13 +262,31 @@ class _CourseSchedState extends State<CourseSched>{
                           );
                         },
                       ),
+                      OutlinedButton(
+                        onPressed: (){
+                          coProv.fetchTasks(isDefault: false);
+                        },
+                        child: Text(
+                          'Search',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 Expanded(
                   child:  Padding(
                     padding: EdgeInsets.only(left: 25.w, right: 60.w),
-                    child: getCourseSchedule(),
+                    child: Selector<CourseSchedProv, String>(
+                      selector: (context, prov) => prov.timeStrKey,
+                      shouldRebuild: (prev, next) => prev != next,
+                      builder: (context, _, child) {
+                        return getCourseSchedule(coProv.tasks);
+                      },
+                    ),
                   )
                 )
               ],
@@ -260,7 +296,7 @@ class _CourseSchedState extends State<CourseSched>{
       ),
     );
   }
-  Widget getCourseSchedule(){
+  Widget getCourseSchedule(List<TimePlannerTask> tasks1){
     return TimePlanner(
       setTimeOnAxis: false,
       style: TimePlannerStyle(
@@ -314,24 +350,7 @@ class _CourseSchedState extends State<CourseSched>{
           ),
         ),
       ],
-      tasks: [
-        TimePlannerTask(
-          // background color for task
-          color: Colors.purple,
-          // day: Index of header, hour: Task will be begin at this hour
-          // minutes: Task will be begin at this minutes
-          dateTime: TimePlannerDateTime(day: 0, hour: 8, minutes: 30),
-          // Minutes duration of task
-          minutesDuration: 120,
-          // Days duration of task (use for multi days task)
-          daysDuration: 1,
-          onTap: () {},
-          child: Text(
-            'this is a task',
-            style: TextStyle(color: Colors.grey[350], fontSize: 12),
-          ),
-        ),
-      ],
+      tasks: tasks1,
     );
   }
 }
